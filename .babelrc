@@ -1,0 +1,26 @@
+{
+  "presets": [["@babel/env", { "targets": { "node": "current" } }], "@babel/preset-typescript"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "extensions": [".ts"],
+        "root": ["."],
+        "alias": {
+          "@common": "./src/common",
+          "@domain": "./src/domain",
+          "@data": "./src/data",
+          "@web": "./src/web",
+          "@infrastructure": "./src/infrastructure",
+          "@container": ["src/container.ts"]
+        }
+      }
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    "@babel/plugin-transform-destructuring",
+    "babel-plugin-transform-typescript-metadata"
+  ],
+  "comments": false,
+  "ignore": ["./src/__tests__"]
+}
