@@ -18,6 +18,7 @@
     "lint": "eslint src/**/*.ts && eslint test/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts && eslint test/**/*.ts",
     "test": "jest -i --forceExit",
+    "type-check": "tsc --noEmit",
     "build:js": "babel src --out-dir dist --extensions '.ts'",
     "build": "npm run type-check && npm run build:js",
     "start": "nodemon -e ts -x ts-node -r tsconfig-paths/register src/index.ts",
