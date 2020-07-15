@@ -1,6 +1,6 @@
 # What do you say - Server
  
- :memo: 인사말을 대필해주는 서비스
+ :memo: **인사말을 대필해주는 서비스**
  
 <br>
 
