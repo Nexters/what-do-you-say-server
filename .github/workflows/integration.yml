@@ -1,4 +1,4 @@
-name: Event-Promotion CI
+name: What do you say Server - CI
 
 on:
   pull_request:
