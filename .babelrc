@@ -8,11 +8,10 @@
         "root": ["."],
         "alias": {
           "@common": "./src/common",
-          "@domain": "./src/domain",
-          "@data": "./src/data",
-          "@web": "./src/web",
-          "@infrastructure": "./src/infrastructure",
-          "@container": ["src/container.ts"]
+          "@controller": "./src/controller",
+          "@service": "./src/service",
+          "@repository": "./src/repository",
+          "@infrastructure": "./src/infrastructure"
         }
       }
     ],

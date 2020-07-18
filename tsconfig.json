@@ -15,12 +15,10 @@
     "baseUrl": ".",
     "paths": {
       "@common/*": ["src/common/*"],
-      "@domain/*": ["src/domain/*"],
-      "@data/*": ["src/data/*"],
-      "@web/*": ["src/web/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
-      "@container": ["src/container.ts"],
-      "@generated": ["generated/"]
+      "@controller/*": ["src/controller/*"],
+      "@service/*": ["src/service/*"],
+      "@repository/*": ["src/repository/*"],
+      "@infrastructure/*": ["src/infrastructure/*"]
     },
     "typeRoots": ["node_modules/@types", "src/common/types"]
   },

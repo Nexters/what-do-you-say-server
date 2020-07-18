@@ -1,8 +1,8 @@
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { Connection, createConnection } from 'typeorm'
 import config from '@common/config'
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
-export const initDB = async (): Promise<Connection> => {
+export const initDatabase = async (): Promise<Connection> => {
   const { syncForce, db } = config
   const { type, timezone, entitiesPath, database, uri, replication } = db
 
