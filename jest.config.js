@@ -2,14 +2,13 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'js', 'd.ts'],
-  modulePaths: ['<rootDir>/src/', '<rootDir>/test/', '<rootDir>/generated/'],
+  modulePaths: ['<rootDir>/src/', '<rootDir>/test/'],
   moduleNameMapper: {
-    '@infrastructure/(.*)': '<rootDir>/src/infrastructure/$1',
     '@common/(.*)': '<rootDir>/src/common/$1',
-    '@domain/(.*)': '<rootDir>/src/domain/$1',
-    '@data/(.*)': '<rootDir>/src/data/$1',
-    '@web/(.*)': '<rootDir>/src/web/$1',
-    '@container': '<rootDir>/src/container',
+    '@controller/(.*)': '<rootDir>/src/controller/$1',
+    '@service/(.*)': '<rootDir>/src/service/$1',
+    '@repository/(.*)': '<rootDir>/src/repository/$1',
+    '@infrastructure/(.*)': '<rootDir>/src/infrastructure/$1',
   },
   transform: { '^.+\\.(ts)?$': 'ts-jest' },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
@@ -20,4 +19,4 @@ module.exports = {
   },
   silent: true,
   verbose: false,
-};
+}
