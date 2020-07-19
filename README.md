@@ -4,7 +4,7 @@
 
 <br>
 
-## :Hammer and Wrench: Main Modules
+## :wrench: Main Modules
 
 - `express`
 - `awilix`
@@ -19,13 +19,13 @@
 
 1. 개발시 clone을 받아서 사용한. (fork :x:)
   
-  - `git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git`
+    - `git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git`
 
 2. 3개의 브랜치로 구성되어 있다. (`feature/issue-이슈번호` -> `dev` -> `master` 순으로 작업해야 함)
 
-  - `master`
-  - `dev`
-  - `feature/issue-이슈 번호`
+    - `master`
+    - `dev`
+    - `feature/issue-이슈 번호`
     
 4. `feature/issue-이슈 번호` 브랜치가 `dev` 브랜치에 머지 되면, 반드시 삭제해야 한다.
 
@@ -107,4 +107,3 @@ src
 - github actions를 활용해서 지속적 통합 및 배포
 - `feature/issue-xx` 브랜치에서 `dev`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
 - `dev`에서 `master`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
-- ``
