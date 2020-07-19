@@ -105,5 +105,5 @@ src
 ## :airplane: CI / CD
 
 - github actions를 활용해서 지속적 통합 및 배포
-- `feature/issue-xx` 브랜치에서 `dev`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
+- `feature` 브랜치에서 `dev`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
 - `dev`에서 `master`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
