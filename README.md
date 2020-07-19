@@ -17,15 +17,18 @@
 
 ## :octocat: Git Branch Strategy
 
-- 개발시 clone을 받아서 사용한. (fork :x:)
-  
-    - `git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git`
-
 - 3개의 브랜치로 구성되어 있다. (`feature/issue-이슈번호` -> `dev` -> `master` 순으로 작업해야 함)
 
     - `master`
     - `dev`
     - `feature/issue-이슈 번호`
+
+- `dev` 브랜치를 clone 받은 후(Repository Fork :x:), `feature/issue-이슈 번호` 브랜치를 만들어서 개발한다.
+  
+    ```zsh
+    # dev branch clone
+    $ git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git
+    ```
     
 - `feature/issue-이슈 번호` 브랜치가 `dev` 브랜치에 머지 되면, 반드시 삭제해야 한다.
 
