@@ -6,12 +6,12 @@
 
 ## :hammer: :wrench: Main Modules
 
-- `express : ^4.17.1`
-- `awilix : ^4.2.6`
-- `awilix-express : ^3.0.0`
-- `mysql2 : ^2.1.0`
-- `typeorm : ^0.2.25`
-- `ts-jest : ^26.1.2`
+- `express`
+- `awilix`
+- `awilix-express`
+- `mysql2`
+- `typeorm`
+- `ts-jest`
 
 <br>
 
