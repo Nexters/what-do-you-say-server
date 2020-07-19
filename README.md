@@ -47,6 +47,9 @@
 ## :green_book: How to run test code locally
 
 ```zsh
+# mysql container 실행
+$ docker-compose -f docker-compose.yml up -d
+
 # lint 체크 하고, type-check 후, 테스트 코드 실행하는 스크립트
 $ npm run test # or npm test
 ```
