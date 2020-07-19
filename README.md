@@ -4,7 +4,7 @@
 
 <br>
 
-## :hammer: :wrench: Main Modules
+## :hammer and wrench: Main Modules
 
 - `express`
 - `awilix`
