@@ -27,6 +27,7 @@
   "dependencies": {
     "awilix": "^4.2.6",
     "awilix-express": "^3.0.0",
+    "class-validator": "^0.12.2",
     "cors": "^2.8.5",
     "date-fns": "^2.14.0",
     "dotenv-safe": "^8.2.0",
