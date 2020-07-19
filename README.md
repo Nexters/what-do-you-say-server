@@ -1,6 +1,6 @@
 # What do you say - Server
 
-#### :question: 뭐라하지? - 인사말을 대신 작성해주는 서비스
+### :question: 뭐라하지? - 인사말을 대신 작성해주는 서비스
 
 <br>
 
