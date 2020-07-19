@@ -4,7 +4,7 @@
 
 <br>
 
-## :hammerandwrench: Main Modules
+## :hammer: :wrench: Main Modules
 
 - `express : ^4.17.1`
 - `awilix : ^4.2.6`
