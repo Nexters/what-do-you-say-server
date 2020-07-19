@@ -23,10 +23,11 @@
     - `dev`
     - `feature/issue-이슈 번호`
 
-- `dev`브랜치를 clone 받은 후(Repository Fork :x:), `feature/issue-이슈 번호` 브랜치를 만들어서 개발한다.
+- `dev` 브랜치를 clone 받은 후(Repository Fork :x:), `feature/issue-이슈 번호` 브랜치를 만들어서 개발한다.
   
     ```zsh
-    $ git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git`
+    # clone 명령어
+    $ git clone -b dev --single-branch https://github.com/Nexters/what-do-you-say-server.git
     ```
     
 - `feature/issue-이슈 번호` 브랜치가 `dev` 브랜치에 머지 되면, 반드시 삭제해야 한다.
