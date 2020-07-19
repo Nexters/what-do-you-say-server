@@ -4,7 +4,7 @@
 
 <br>
 
-## :wrench: Main Modules
+## :rocket: Main Modules
 
 - `express`
 - `awilix`
@@ -33,7 +33,7 @@
 
 <br>
 
-## :gear: How to run test code locally
+## :green_book: How to run test code locally
 
 ```zsh
 # lint 체크 하고, type-check 후, 테스트 코드 실행하는 스크립트
@@ -42,7 +42,7 @@ $ npm run test # or npm test
 
 <br>
 
-## :gear: How to run the server locally
+## :blue_book: How to run the server locally
 
 1. ts-node를 사용해서 실행하는 경우
 
