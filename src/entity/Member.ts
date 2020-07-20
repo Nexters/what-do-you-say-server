@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm'
 
 enum LoginType {
   APPLE = 'apple',
@@ -17,4 +17,10 @@ export class Member extends BaseEntity {
 
   @Column('enum', { enum: LoginType, default: LoginType.APPLE, comment: '로그인 타입' })
   type!: LoginType
+
+  @CreateDateColumn({ name: 'created_at', comment: '등록 날짜' })
+  createdAt!: Date
+
+  @UpdateDateColumn({ name: 'updated_at', comment: '수정 날짜' })
+  updatedAt!: Date
 }
