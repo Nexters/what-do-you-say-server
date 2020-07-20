@@ -8,6 +8,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  VersionColumn,
 } from 'typeorm'
 import { Bookmark } from './Bookmark'
 
@@ -40,6 +41,9 @@ export class Greeting extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at', comment: '수정 날짜' })
   updatedAt!: Date
+
+  @VersionColumn({ name: 'version', comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
+  version!: number
 
   @ManyToMany(() => Bookmark, { cascade: true })
   @JoinTable({ name: 'greeting_bookmark' })
