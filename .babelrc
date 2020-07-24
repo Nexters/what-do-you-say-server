@@ -9,6 +9,7 @@
         "alias": {
           "@common": "./src/common",
           "@controller": "./src/controller",
+          "@entity": "./src/entity",
           "@service": "./src/service",
           "@repository": "./src/repository",
           "@infrastructure": "./src/infrastructure"
