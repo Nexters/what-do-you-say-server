@@ -1,0 +1,57 @@
+name: Deploy to Dev
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Docker Run Mysql Container (for local DB)
+        run: |
+          docker run --name mysql -e "MYSQL_ROOT_PASSWORD=example" -e "MYSQL_DATABASE=api_dev" -p 9001:3306 -d mysql:8 --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=''
+
+      - name: Wait for DB initialize
+        run: |
+          chmod 777 ./waitdb.sh
+          ./waitdb.sh
+
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-module
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: NPM Install
+        run: |
+          npm install
+
+      - name: NPM Lint & Type-Check
+        run: |
+          npm run lint
+          npm run type-check
+
+      - name: NPM Test
+        run: |
+          cp .env.sample ./.env
+          npm test
+        env:
+          DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
+          DB_REPLICATION: ${{ secrets.DB_REPLICATION }}
