@@ -47,5 +47,5 @@ export class Greeting extends BaseEntity {
 
   @ManyToMany(() => Bookmark, { cascade: true })
   @JoinTable({ name: 'greeting_bookmark' })
-  bookmarks!: Bookmark[]
+  bookmarks!: Array<Bookmark>
 }
