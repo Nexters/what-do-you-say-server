@@ -1,10 +1,11 @@
 import { AwilixContainer } from 'awilix'
-import { initDatabase } from '@infrastructure/typeorm'
+import { Connection } from 'typeorm'
 import { initContainer } from './container'
+import { initDatabase } from '@infrastructure/typeorm'
 import initExpress from '@infrastructure/express'
 
 initDatabase()
-  .then(() => initContainer())
+  .then((dbConnection: Connection) => initContainer(dbConnection))
   .then((container: AwilixContainer) => initExpress(container))
   .catch((err: Error) => {
     // eslint-disable-next-line no-console
