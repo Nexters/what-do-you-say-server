@@ -19,5 +19,5 @@ module.exports = {
     },
   },
   silent: true,
-  verbose: false,
+  verbose: true,
 }
