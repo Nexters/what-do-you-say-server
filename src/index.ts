@@ -1,5 +1,5 @@
-import { AwilixContainer } from 'awilix'
 import { Connection } from 'typeorm'
+import { AwilixContainer } from 'awilix'
 import { initContainer } from './container'
 import { initDatabase } from '@infrastructure/typeorm'
 import initExpress from '@infrastructure/express'
