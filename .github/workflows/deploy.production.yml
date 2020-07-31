@@ -57,9 +57,10 @@ jobs:
           DB_REPLICATION: ${{ secrets.DB_REPLICATION }}
 
       - name: Create Zip File
+        env:
+          PROJECT_NAME: what-do-you-say-server
         run: |
-          rm -rf node_modules
-          zip -r what-do-you-say-servers *
+          zip -r $PROJECT_NAME *
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -75,7 +76,7 @@ jobs:
           TAG: ${{ github.sha }}
         run: |
           ls -al
-          aws s3 cp ./$PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME-$TAG.zip --region ap-northeast-2
+          aws s3 cp $PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME-$TAG.zip --region ap-northeast-2
 
       - name: Deploy to AWS EC2
         env:
