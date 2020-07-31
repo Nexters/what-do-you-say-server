@@ -61,7 +61,7 @@ jobs:
           PROJECT_NAME: what-do-you-say-server
         run: |
           rm -rf node_modules
-          zip -r $PROJECT_NAME .
+          zip -r $PROJECT_NAME * .
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
