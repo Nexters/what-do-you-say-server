@@ -1,5 +1,31 @@
 version: '3'
 services:
+  what-do-you-say-server:
+    image: what-do-you-say-server:latest
+    container_name: what-do-you-say-server
+    command: >
+      sh -c
+      "npm run lint &&
+      npm run type-check &&
+      npm run start"
+    volumes:
+      - ./dist:/home/node/api/dist
+      - ./src:/home/node/api/src
+      - ./package.json:/home/node/api/package.json
+      - ./.env:/home/node/api/.env
+      - ./.env.sample:/home/node/api/.env.sample
+      - ./.babelrc:/home/node/api/.babelrc
+      - ./.eslintrc:/home/node/api/.eslintrc
+    ports:
+      - '9000:9000'
+    environment:
+      NODE_ENV: development
+      PORT: 9000
+      TZ: Asia/Seoul
+    tty: true
+    links:
+      - what-do-you-say-server-mysql
+
   what-do-you-say-server-mysql:
     image: mysql:8
     container_name: what-do-you-say-server-mysql
