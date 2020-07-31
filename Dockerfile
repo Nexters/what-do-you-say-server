@@ -1,6 +1,5 @@
 FROM node:erbium-alpine
 
-ARG REPO_ACCESS_TOKEN
 ENV HOME=/home/node
 ENV APP_DIR=$HOME/api
 WORKDIR $APP_DIR
@@ -16,9 +15,6 @@ RUN apk --no-cache --virtual build-dependencies add \
 
 COPY ./ $APP_DIR/
 
-# RUN rm -rf idl
-# RUN git submodule add --force https://$REPO_ACCESS_TOKEN@github.com/seoulstore/idl.git
-# RUN rm -rf .git
 RUN npm install
 
 EXPOSE 9000
