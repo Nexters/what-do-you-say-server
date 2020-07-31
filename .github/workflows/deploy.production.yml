@@ -3,7 +3,7 @@ name: Deploy to Dev
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build:
@@ -55,3 +55,6 @@ jobs:
         env:
           DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
           DB_REPLICATION: ${{ secrets.DB_REPLICATION }}
+
+      - name: Configure AWS Credentials
+
