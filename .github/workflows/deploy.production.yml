@@ -73,7 +73,7 @@ jobs:
       - name: Upload to AWS S3
         env:
           PROJECT_NAME: what-do-you-say-server
-          S3_BUCKET_NAME: what-do-you-say-s3
+          S3_BUCKET_NAME: what-do-you-say-bucket
           TAG: ${{ github.sha }}
         run: |
           aws s3 cp $PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME-$TAG.zip --region ap-northeast-2
@@ -83,7 +83,7 @@ jobs:
           CODE_DEPLOY_APPLICATION_NAME: what-do-you-say-service
           CODE_APPLICATION_DEPLOY_GROUP: what-do-you-say-deploy-group
           PROJECT_NAME: what-do-you-say-server
-          S3_BUCKET_NAME: what-do-you-say-s3
+          S3_BUCKET_NAME: what-do-you-say-bucket
           TAG: ${{ github.sha }}
         run: |
           aws deploy create-deployment \
