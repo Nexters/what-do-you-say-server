@@ -28,18 +28,19 @@ const index: ConfigIndex = {
     db: {
       type: 'mysql',
       timezone: '+09:00',
-      entitiesPath: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
+      entitiesPath: path.join(__dirname, '../../entity/*.{js,ts}'),
       logging: false,
     },
   },
   test: {
     syncForce: true,
     db: {
-      database: 'test',
+      database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   development: {
+    syncForce: true,
     db: {
       replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
     },

@@ -1,10 +1,9 @@
-name: What do you say Server - CI
+name: Production Server Deploy to AWS EC2
 
 on:
-  pull_request:
+  push:
     branches:
       - master
-      - dev
 
 jobs:
   build:
@@ -56,3 +55,36 @@ jobs:
         env:
           DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
           DB_REPLICATION: ${{ secrets.DB_REPLICATION }}
+
+      - name: Create Zip File
+        env:
+          PROJECT_NAME: what-do-you-say-server
+        run: |
+          zip -r -j $PROJECT_NAME $PROJECT_NAME/*
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to AWS S3
+        env:
+          PROJECT_NAME: what-do-you-say-server
+          S3_BUCKET_NAME: what-do-you-say-s3
+          TAG: ${{ github.sha }}
+        run: |
+          aws s3 cp $PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME-$TAG.zip --region ap-northeast-2
+
+      - name: Deploy to AWS EC2
+        env:
+          PROJECT_NAME: what-do-you-say
+          S3_BUCKET_NAME: what-do-you-say-s3
+          TAG: ${{ github.sha }}
+        run: |
+          aws deploy create-deployment \
+          --application-name $PROJECT_NAME-service \
+          --deployment-group-name $PROJECT_NAME-deploy-group \
+          --region ap-northeast-2 \
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$PROJECT_NAME-$TAG.zip

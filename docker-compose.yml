@@ -9,5 +9,5 @@ services:
       - '9001:3306'
     environment:
       MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: test
+      MYSQL_DATABASE: api_dev
       TZ: Asia/Seoul

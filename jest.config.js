@@ -6,6 +6,7 @@ module.exports = {
   moduleNameMapper: {
     '@common/(.*)': '<rootDir>/src/common/$1',
     '@controller/(.*)': '<rootDir>/src/controller/$1',
+    '@entity/(.*)': '<rootDir>/src/entity/$1',
     '@service/(.*)': '<rootDir>/src/service/$1',
     '@repository/(.*)': '<rootDir>/src/repository/$1',
     '@infrastructure/(.*)': '<rootDir>/src/infrastructure/$1',
@@ -18,5 +19,5 @@ module.exports = {
     },
   },
   silent: true,
-  verbose: false,
+  verbose: true,
 }

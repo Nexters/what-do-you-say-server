@@ -4,7 +4,7 @@ import config from '@common/config'
 
 export const initDatabase = async (): Promise<Connection> => {
   const { syncForce, db } = config
-  const { type, timezone, entitiesPath, database, uri, replication } = db
+  const { type, timezone, entitiesPath, logging, database, uri, replication } = db
 
   return createConnection({
     type,
@@ -16,6 +16,6 @@ export const initDatabase = async (): Promise<Connection> => {
     entities: [entitiesPath],
     replication: replication ? { ...replication } : null,
     namingStrategy: new SnakeNamingStrategy(),
-    logging: true,
+    logging,
   })
 }
