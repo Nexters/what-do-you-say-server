@@ -57,10 +57,9 @@ jobs:
           DB_REPLICATION: ${{ secrets.DB_REPLICATION }}
 
       - name: Create Zip File
-        env:
-          PROJECT_NAME: what-do-you-say-server
         run: |
-          zip -r -j $PROJECT_NAME $PROJECT_NAME/*
+          rm -rf node_modules
+          zip -r what-do-you-say-servers *
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
