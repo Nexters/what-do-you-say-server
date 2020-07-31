@@ -60,6 +60,7 @@ jobs:
         env:
           PROJECT_NAME: what-do-you-say-server
         run: |
+          rm -rf node_modules
           zip -r $PROJECT_NAME *
 
       - name: Configure AWS Credentials
@@ -75,7 +76,6 @@ jobs:
           S3_BUCKET_NAME: what-do-you-say-s3
           TAG: ${{ github.sha }}
         run: |
-          ls -al
           aws s3 cp $PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME-$TAG.zip --region ap-northeast-2
 
       - name: Deploy to AWS EC2
