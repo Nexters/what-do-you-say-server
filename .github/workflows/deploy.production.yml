@@ -80,12 +80,14 @@ jobs:
 
       - name: Deploy to AWS EC2
         env:
-          PROJECT_NAME: what-do-you-say
+          CODE_DEPLOY_APPLICATION_NAME: what-do-you-say-service
+          CODE_APPLICATION_DEPLOY_GROUP: what-do-you-say-deploy-group
+          PROJECT_NAME: what-do-you-say-server
           S3_BUCKET_NAME: what-do-you-say-s3
           TAG: ${{ github.sha }}
         run: |
           aws deploy create-deployment \
-          --application-name $PROJECT_NAME-service \
-          --deployment-group-name $PROJECT_NAME-deploy-group \
+          --application-name $CODE_DEPLOY_APPLICATION_NAME \
+          --deployment-group-name $CODE_APPLICATION_DEPLOY_GROUP \
           --region ap-northeast-2 \
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$PROJECT_NAME-$TAG.zip
