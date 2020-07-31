@@ -1,4 +1,4 @@
-name: Deploy to Dev
+name: Production Server Deploy to AWS EC2
 
 on:
   push:
