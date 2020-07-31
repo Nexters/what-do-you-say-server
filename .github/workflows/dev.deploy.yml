@@ -1,9 +1,8 @@
-name: What do you say Server - CI
+name: Deploy to Dev
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
       - dev
 
 jobs:

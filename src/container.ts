@@ -1,7 +1,10 @@
-import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer } from 'awilix'
+import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asFunction } from 'awilix'
+import { Connection } from 'typeorm'
 import path from 'path'
 
-export const initContainer = async (): Promise<AwilixContainer> => {
+import GreetingRepository from '@repository/GreetingRepository'
+
+export const initContainer = async (dbConnection: Connection): Promise<AwilixContainer> => {
   const container: AwilixContainer = createContainer({
     injectionMode: InjectionMode.CLASSIC,
   })
@@ -23,6 +26,18 @@ export const initContainer = async (): Promise<AwilixContainer> => {
       },
     },
   )
+
+  // TypeORM Connection Injection for Transaction
+  container.register({
+    typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+  })
+
+  // Custom Repository Injection
+  container.register({
+    GreetingRepository: asFunction(() => dbConnection.getCustomRepository(GreetingRepository), {
+      lifetime: Lifetime.TRANSIENT,
+    }),
+  })
 
   // eslint-disable-next-line no-console
   console.log(container)
