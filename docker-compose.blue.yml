@@ -1,7 +1,7 @@
 version: '3'
 services:
   what-do-you-say-blue-server:
-    image: what-do-you-say-blue-server:latest
+    image: what-do-you-say-single-server:latest
     container_name: what-do-you-say-blue-server
     volumes:
       - /home/ubuntu/deploy/what-do-you-say-server:/deploy/what-do-you-say-server
