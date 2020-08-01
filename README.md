@@ -97,7 +97,7 @@ $ npm run prod
 
 3. docker를 사용해서 실행하는 경우
 
-- .env 파일에 DB Host가 `host.docker.internal`로 되어 있어야 합니다.
+> .env 파일에 DB Host가 `host.docker.internal`로 되어 있어야 합니다.
 
 ```zsh
 # what-do-you-say-server 이미지를 생성한다.
