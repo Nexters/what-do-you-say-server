@@ -130,4 +130,4 @@ src
 
 ## :pushpin: Reference
 
-- [API Docs](https://github.com/Nexters/what-do-you-say-server/wiki/API-Docs)
+- [API Documents (Swagger)](http://54.180.179.95/api-docs/)
