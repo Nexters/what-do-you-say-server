@@ -11,4 +11,8 @@ export default class GreetingService {
     this.typeOrmConnectionForTransaction = typeOrmConnectionForTransaction
     this.greetingRepository = greetingRepository
   }
+
+  public async findGreetings() {
+    return this.greetingRepository.findAll({})
+  }
 }

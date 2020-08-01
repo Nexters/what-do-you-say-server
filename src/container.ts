@@ -30,12 +30,12 @@ export const initContainer = async (dbConnection: Connection | null): Promise<Aw
   if (dbConnection) {
     // TypeORM Connection Injection for Transaction
     container.register({
-      typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+      typeOrmConnectionForTransaction: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
     })
 
     // Custom Repository Injection
     container.register({
-      GreetingRepository: asFunction(() => dbConnection.getCustomRepository(GreetingRepository), {
+      greetingRepository: asFunction(() => dbConnection.getCustomRepository(GreetingRepository), {
         lifetime: Lifetime.TRANSIENT,
       }),
     })
