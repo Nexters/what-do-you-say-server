@@ -1,5 +1,3 @@
-import path from 'path'
-
 export default {
   swaggerDefinition: {
     info: {
@@ -37,5 +35,5 @@ export default {
     },
     schemes: ['http', 'https'],
   },
-  apis: [path.join(__dirname, '../../controller/*Controller.{js,ts}')],
+  apis: ['src/controller/*Controller.{js,ts}'],
 }
