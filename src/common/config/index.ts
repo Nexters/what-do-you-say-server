@@ -10,13 +10,11 @@ const requireProcessEnv = (name: string): string => {
   return process.env[name] || ''
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({
-    path: path.join(__dirname, '../../../.env'),
-    example: path.join(__dirname, '../../../.env.sample'),
-    allowEmptyValues: true,
-  })
-}
+dotenv.config({
+  path: path.join(__dirname, '../../../.env'),
+  example: path.join(__dirname, '../../../.env.sample'),
+  allowEmptyValues: true,
+})
 
 const index: ConfigIndex = {
   all: {
