@@ -66,7 +66,7 @@ $ npm install
 $ cp .env.sample ./.env
 
 # mysql container 실행
-$ docker-compose -f docker-compose.yml up -d
+$ docker-compose -f docker-compose.mysql.yml up -d
 
 # lint
 $ npm run lint
@@ -86,7 +86,7 @@ $ npm install
 $ cp .env.sample ./.env
 
 # mysql container 실행
-$ docker-compose -f docker-compose.yml up -d
+$ docker-compose -f docker-compose.mysql.yml up -d
 
 # babel을 사용하여 js파일로 변환
 $ npm run build
