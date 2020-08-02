@@ -18,7 +18,6 @@ export default (container: AwilixContainer): Express => {
   const httpLogging: Debugger = debug('http')
   const appServerLogging: Debugger = debug('app:server')
   const swaggerApiSpec: object = swaggerJSDoc(swaggerApiOption)
-  const swaggerPetStoreSpec: object = swaggerJSDoc(swaggerPetStoreOption)
 
   app.use(cors())
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -33,7 +32,6 @@ export default (container: AwilixContainer): Express => {
   app.use(scopePerRequest(container))
   app.use(loadControllers('../../controller/*Controller.{js,ts}', { cwd: __dirname }))
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerApiSpec))
-  app.use('/swagger.json', swaggerUI.serve, swaggerUI.setup(swaggerPetStoreSpec))
 
   /**
    * @swagger
@@ -53,6 +51,25 @@ export default (container: AwilixContainer): Express => {
    *          description: 성공
    */
   app.use('/health-check', (req: Request, res: Response) => res.status(200).json({ healthy: true }))
+
+  /**
+   * @swagger
+   * tags:
+   *  name: Pet Store JSON
+   *  description: Pet Store JSON 데이터를 내려주는 API
+   */
+
+  /**
+   *  @swagger
+   *  /swagger.json:
+   *    get:
+   *      summray: JSON 데이터를 내려준다.
+   *      tags: [Pet Store JSON]
+   *      responses:
+   *        200:
+   *          description: 성공
+   */
+  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerPetStoreOption }))
 
   app.listen(port, host, () => {
     appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env)
