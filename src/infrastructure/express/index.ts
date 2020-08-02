@@ -68,7 +68,7 @@ export default (container: AwilixContainer): Express => {
    *        200:
    *          description: 성공
    */
-  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json(swaggerApiSpec))
+  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerApiOption }))
 
   app.listen(port, host, () => {
     appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env)
