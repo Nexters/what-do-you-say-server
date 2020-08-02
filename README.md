@@ -1,5 +1,8 @@
 # What do you say - Server
 
+![What do you say Server - CI](https://github.com/Nexters/what-do-you-say-server/workflows/What%20do%20you%20say%20Server%20-%20CI/badge.svg)
+![Production Server Deploy to AWS EC2](https://github.com/Nexters/what-do-you-say-server/workflows/Production%20Server%20Deploy%20to%20AWS%20EC2/badge.svg)
+
 ### :question: 뭐라하지? - 인사말을 대신 작성해주는 서비스
 
 <br>
