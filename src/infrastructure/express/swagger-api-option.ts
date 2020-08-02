@@ -35,5 +35,5 @@ export default {
     },
     schemes: ['http', 'https'],
   },
-  apis: ['src/controller/*Controller.{js,ts}'],
+  apis: ['src/infrastructure/express/*.{js,ts}', 'src/controller/*Controller.{js,ts}'],
 }
