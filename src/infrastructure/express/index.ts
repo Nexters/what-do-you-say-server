@@ -54,8 +54,8 @@ export default (container: AwilixContainer): Express => {
   /**
    * @swagger
    * tags:
-   *  name: Pet Store JSON
-   *  description: Pet Store JSON 데이터를 내려주는 API
+   *  name: Swagger JSON
+   *  description: Swagger JSON 데이터를 내려주는 API
    */
 
   /**
@@ -63,7 +63,7 @@ export default (container: AwilixContainer): Express => {
    *  /swagger.json:
    *    get:
    *      summray: JSON 데이터를 내려준다.
-   *      tags: [Pet Store JSON]
+   *      tags: [Swagger JSON]
    *      responses:
    *        200:
    *          description: 성공
