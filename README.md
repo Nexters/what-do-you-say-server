@@ -128,9 +128,3 @@ src
 ├── repository
 └── service
 ```
-
-<br>
-
-## :pushpin: Reference
-
-- [API Documents (Swagger)](http://54.180.179.95/api-docs/)
