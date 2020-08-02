@@ -7,7 +7,6 @@ import swaggerUI from 'swagger-ui-express'
 import jsend from 'jsend'
 import cors from 'cors'
 
-import swaggerPetStoreOption from '@infrastructure/express/swagger-petstore-option'
 import swaggerApiOption from '@infrastructure/express/swagger-api-option'
 import config from '@common/config'
 
@@ -69,7 +68,7 @@ export default (container: AwilixContainer): Express => {
    *        200:
    *          description: 성공
    */
-  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerPetStoreOption }))
+  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerApiOption }))
 
   app.listen(port, host, () => {
     appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env)
