@@ -1,21 +1,21 @@
-// import { Connection } from 'typeorm'
+import { Connection } from 'typeorm'
 import { AwilixContainer } from 'awilix'
 import { initContainer } from './container'
-// import { initDatabase } from '@infrastructure/typeorm'
+import { initDatabase } from '@infrastructure/typeorm'
 import initExpress from '@infrastructure/express'
 
 // DB, Express
-// initDatabase()
-//   .then((dbConnection: Connection) => initContainer(dbConnection))
-//   .then((container: AwilixContainer) => initExpress(container))
-//   .catch((err: Error) => {
-//     // eslint-disable-next-line no-console
-//     console.error('Server failed to start due to error: %s', err)
-//   })
-
-initContainer(null)
+initDatabase()
+  .then((dbConnection: Connection) => initContainer(dbConnection))
   .then((container: AwilixContainer) => initExpress(container))
   .catch((err: Error) => {
     // eslint-disable-next-line no-console
     console.error('Server failed to start due to error: %s', err)
   })
+
+// initContainer(null)
+//   .then((container: AwilixContainer) => initExpress(container))
+//   .catch((err: Error) => {
+//     // eslint-disable-next-line no-console
+//     console.error('Server failed to start due to error: %s', err)
+//   })

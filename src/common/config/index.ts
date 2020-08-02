@@ -38,7 +38,6 @@ const index: ConfigIndex = {
     },
   },
   development: {
-    syncForce: true,
     db: {
       replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
     },
