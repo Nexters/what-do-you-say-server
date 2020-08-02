@@ -33,7 +33,7 @@ export default (container: AwilixContainer): Express => {
   app.use(scopePerRequest(container))
   app.use(loadControllers('../../controller/*Controller.{js,ts}', { cwd: __dirname }))
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerApiSpec))
-  app.use('/swagger-json', swaggerUI.serve, swaggerUI.setup(swaggerPetStoreSpec))
+  app.use('/swagger.json', swaggerUI.serve, swaggerUI.setup(swaggerPetStoreSpec))
 
   /**
    * @swagger
