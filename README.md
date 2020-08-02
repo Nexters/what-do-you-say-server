@@ -39,8 +39,8 @@
 ## :airplane: CI / CD
 
 - github actions를 활용해서 지속적 통합 및 배포
-- `feature` 브랜치에서 `dev`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
-- `dev`에서 `master`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, CI/CD를 통해 운영 리소스에 배포된다.
+- `feature` 브랜치에서 `dev`로 Pull Request를 보내면, CI가 동작된다.
+- `dev`에서 `master`로 Pull Request를 보내면, CI가 동작되고 Merge가 되면, 운영 리소스에 배포된다.
 
 <br>
 
@@ -48,7 +48,7 @@
 
 ```zsh
 # mysql container 실행
-$ docker-compose -f docker-compose.yml up -d
+$ docker-compose -f docker-compose.mysql.yml up -d
 
 # lint 체크 하고, type-check 후, 테스트 코드 실행하는 스크립트
 $ npm run test # or npm test
