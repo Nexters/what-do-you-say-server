@@ -75,7 +75,7 @@ export default (container: AwilixContainer): Express => {
   })
 
   app.on('error', (err) => {
-    appServerLogging('Server failed with clinetError: %s', err)
+    appServerLogging('Server failed with client error: %s', err)
   })
 
   return app
