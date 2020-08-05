@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run bulid && npm run prod
+sudo npm run prod
