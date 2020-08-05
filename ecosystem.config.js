@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'what-do-you-say',
       script: 'dist/.',
-      instances: 0,
+      instances: 8,
       exec_mode: 'cluster',
       wait_ready: true,
       listen_timeout: 50000,

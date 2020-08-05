@@ -22,7 +22,7 @@
     "build:js": "babel src --out-dir dist --extensions '.ts'",
     "build": "npm run type-check && npm run build:js",
     "start": "nodemon -e ts -x env DEBUG=* ts-node -r tsconfig-paths/register src/index.ts",
-    "prod": "env DEBUG=app*,error*,http pm2 reload ecosystem.config.js && pm2 list && pm2 logs"
+    "prod": "env DEBUG=app*,error*,http pm2 reload ecosystem.config.js && pm2 list"
   },
   "dependencies": {
     "awilix": "^4.2.6",
