@@ -1,0 +1,20 @@
+version: '3'
+services:
+  what-do-you-say-green-server:
+    image: what-do-you-say-server:latest
+    container_name: what-do-you-say-green-server
+    volumes:
+      - ./dist:/home/node/api/dist
+      - ./src:/home/node/api/src
+      - ./package.json:/home/node/api/package.json
+      - ./.env:/home/node/api/.env
+      - ./.env.sample:/home/node/api/.env.sample
+      - ./.babelrc:/home/node/api/.babelrc
+      - ./.eslintrc:/home/node/api/.eslintrc
+    ports:
+      - '9003:9003'
+    environment:
+      NODE_ENV: production
+      PORT: 9003
+      TZ: Asia/Seoul
+    tty: true
