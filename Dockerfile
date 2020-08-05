@@ -15,6 +15,7 @@ RUN apk --no-cache --virtual build-dependencies add \
 
 COPY ./ $APP_DIR/
 
+RUN npm install -g pm2
 RUN npm install
 
 EXPOSE 9000

@@ -1,8 +1,8 @@
 version: '3'
 services:
-  what-do-you-say-blue-server:
-    image: what-do-you-say-single-server:latest
-    container_name: what-do-you-say-blue-server
+  what-do-you-say-server:
+    image: what-do-you-say-server:latest
+    container_name: what-do-you-say-server
     volumes:
       - ./dist:/home/node/api/dist
       - ./src:/home/node/api/src
@@ -12,9 +12,9 @@ services:
       - ./.babelrc:/home/node/api/.babelrc
       - ./.eslintrc:/home/node/api/.eslintrc
     ports:
-      - '9002:9002'
+      - '9000:9000'
     environment:
       NODE_ENV: production
-      PORT: 9002
+      PORT: 9000
       TZ: Asia/Seoul
     tty: true
