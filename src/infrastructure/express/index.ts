@@ -26,9 +26,7 @@ export default (container: AwilixContainer): Express => {
 
   app.set('isDisableKeepAlive', false)
   app.use((req: Request, res: Response, next: NextFunction) => {
-    if (app.get('isDisableKeepAlive')) {
-      res.set('Connection', 'close')
-    }
+    if (app.get('isDisableKeepAlive')) res.set('Connection', 'close')
     next()
   })
 
