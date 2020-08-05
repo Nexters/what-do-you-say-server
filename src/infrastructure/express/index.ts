@@ -1,9 +1,10 @@
-import express, { Express, NextFunction, Request, Response } from 'express'
+import express, { Application, Express, NextFunction, Request, Response } from 'express'
 import { loadControllers, scopePerRequest } from 'awilix-express'
 import { AwilixContainer } from 'awilix'
 import debug, { Debugger } from 'debug'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
+import process from 'process'
 import jsend from 'jsend'
 import cors from 'cors'
 
@@ -18,12 +19,18 @@ export default (container: AwilixContainer): Express => {
   const appServerLogging: Debugger = debug('app:server')
   const swaggerApiSpec: object = swaggerJSDoc(swaggerApiOption)
 
-  app.use(cors())
   app.use((req: Request, res: Response, next: NextFunction) => {
     httpLogging(`${req.method} ${req.url}`)
     next()
   })
 
+  app.set('isDisableKeepAlive', false)
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (app.get('isDisableKeepAlive')) res.set('Connection', 'close')
+    next()
+  })
+
+  app.use(cors())
   app.use(express.urlencoded({ extended: false }))
   app.use(express.json())
   app.use(jsend.middleware)
@@ -72,10 +79,15 @@ export default (container: AwilixContainer): Express => {
 
   app.listen(port, host, () => {
     appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env)
+    if (process.send) process.send('ready')
   })
 
-  app.on('error', (err) => {
-    appServerLogging('Server failed with client error: %s', err)
+  app.on('error', (err: Application) => appServerLogging('Server failed with client error: %s', err))
+
+  process.on('SIGINT', () => {
+    app.set('isDisableKeepAlive', true)
+    appServerLogging('Server closed')
+    process.exit(0)
   })
 
   return app
