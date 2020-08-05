@@ -7,7 +7,7 @@ EXIST_SERVER=$(docker-compose -p ${DOCKER_APP_NAME} -f docker-compose.server.yml
 if [ -z "$EXIST_SERVER" ]; then
   echo "Server start in docker"
 
-  docker-compose -f docker-compose.server.yml up
+  docker-compose -f docker-compose.server.yml up -d
 else
   echo "Server reload in docker"
 
