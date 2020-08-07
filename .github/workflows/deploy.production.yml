@@ -49,21 +49,24 @@ jobs:
           npm run type-check
 
       - name: NPM Test
-        run: |
-          cp .env.sample ./.env
-          npm test
         env:
           DB_TEST_URL: ${{ secrets.DB_TEST_URL }}
           DB_TEST_DATABASE: ${{ secrets.DB_TEST_DATABASE }}
           DB_PRODUCTION_URL: ${{ secrets.DB_PRODUCTION_URL }}
           DB_PRODUCTION_DATABASE: ${{ secrets.DB_PRODUCTION_DATABASE }}
+        run: |
+          cp .env.sample ./.env
+          npm test
 
       - name: Create Zip File
         env:
           PROJECT_NAME: what-do-you-say-server
+          DB_TEST_URL: ${{ secrets.DB_TEST_URL }}
+          DB_TEST_DATABASE: ${{ secrets.DB_TEST_DATABASE }}
+          DB_PRODUCTION_URL: ${{ secrets.DB_PRODUCTION_URL }}
+          DB_PRODUCTION_DATABASE: ${{ secrets.DB_PRODUCTION_DATABASE }}
         run: |
           cp .env .env.sample
-          cat .env.sample
           rm -rf node_modules
           zip -r $PROJECT_NAME * .
 
