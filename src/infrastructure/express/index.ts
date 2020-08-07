@@ -4,7 +4,6 @@ import { AwilixContainer } from 'awilix'
 import debug, { Debugger } from 'debug'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
-import process from 'process'
 import jsend from 'jsend'
 import cors from 'cors'
 
@@ -21,12 +20,6 @@ export default (container: AwilixContainer): Express => {
 
   app.use((req: Request, res: Response, next: NextFunction) => {
     httpLogging(`${req.method} ${req.url}`)
-    next()
-  })
-
-  app.set('isDisableKeepAlive', false)
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    if (app.get('isDisableKeepAlive')) res.set('Connection', 'close')
     next()
   })
 
@@ -77,18 +70,9 @@ export default (container: AwilixContainer): Express => {
    */
   app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerApiOption }))
 
-  app.listen(port, host, () => {
-    appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env)
-    if (process.send) process.send('ready')
-  })
-
   app.on('error', (err: Application) => appServerLogging('Server failed with client error: %s', err))
 
-  process.on('SIGINT', () => {
-    app.set('isDisableKeepAlive', true)
-    appServerLogging('Server closed')
-    process.exit(0)
-  })
+  app.listen(port, host, () => appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env))
 
   return app
 }
