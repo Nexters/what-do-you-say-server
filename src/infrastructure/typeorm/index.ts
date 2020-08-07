@@ -3,18 +3,17 @@ import { Connection, createConnection } from 'typeorm'
 import config from '@common/config'
 
 export const initDatabase = async (): Promise<Connection> => {
-  const { syncForce, db } = config
-  const { type, timezone, entitiesPath, logging, database, uri, replication } = db
+  const { synchronize, db } = config
+  const { type, timezone, entitiesPath, logging, database, url } = db
 
   return createConnection({
+    url,
     type,
     timezone,
     database,
-    url: uri,
-    synchronize: syncForce,
-    extra: { charset: 'utf8mb4_general_ci' },
+    synchronize,
     entities: [entitiesPath],
-    replication: replication ? { ...replication } : null,
+    extra: { charset: 'utf8mb4_general_ci' },
     namingStrategy: new SnakeNamingStrategy(),
     logging,
   })

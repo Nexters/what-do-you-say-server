@@ -1,7 +1,7 @@
 export interface ConfigTest {
-  readonly syncForce?: boolean
+  readonly synchronize?: boolean
   readonly db?: {
     readonly database?: string
-    readonly uri?: string
+    readonly url?: string
   }
 }

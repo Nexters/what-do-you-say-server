@@ -21,7 +21,7 @@ const index: ConfigIndex = {
     env: process.env.NODE_ENV || 'development',
     port: parseInt(process.env.PORT || '9000', 10),
     host: process.env.HOST || '0.0.0.0',
-    syncForce: process.env.SYNC_FORCE || false,
+    synchronize: process.env.SYNC_FORCE || false,
     jwtSecret: process.env.JWT_SECRET || undefined,
     db: {
       type: 'mysql',
@@ -31,20 +31,22 @@ const index: ConfigIndex = {
     },
   },
   test: {
-    syncForce: true,
+    synchronize: true,
     db: {
-      database: 'api_dev',
-      uri: requireProcessEnv('DB_TEST_URI'),
+      database: requireProcessEnv('DB_TEST_DATABASE'),
+      url: requireProcessEnv('DB_TEST_URL'),
     },
   },
   development: {
     db: {
-      replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
+      database: requireProcessEnv('DB_TEST_DATABASE'),
+      url: requireProcessEnv('DB_TEST_URL'),
     },
   },
   production: {
     db: {
-      replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
+      database: requireProcessEnv('DB_PRODUCTION_DATABASE'),
+      url: requireProcessEnv('DB_PRODUCTION_URL'),
     },
   },
 }
