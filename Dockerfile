@@ -19,4 +19,4 @@ RUN npm install -g pm2
 RUN npm install
 
 EXPOSE 9000
-CMD ["sh", "-c", "npm install && npm run build && npm run prod"]
+CMD ["sh", "-c", "npm run build && npm run prod"]
