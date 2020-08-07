@@ -61,6 +61,10 @@ jobs:
       - name: Create Zip File
         env:
           PROJECT_NAME: what-do-you-say-server
+          DB_TEST_URL: ${{ secrets.DB_TEST_URL }}
+          DB_TEST_DATABASE: ${{ secrets.DB_TEST_DATABASE }}
+          DB_PRODUCTION_URL: ${{ secrets.DB_PRODUCTION_URL }}
+          DB_PRODUCTION_DATABASE: ${{ secrets.DB_PRODUCTION_DATABASE }}
         run: |
           rm -rf node_modules
           zip -r $PROJECT_NAME * .
