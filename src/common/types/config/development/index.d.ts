@@ -1,10 +1,10 @@
 import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions'
 
 export interface ConfigDevelopment {
-  readonly syncForce?: boolean
+  readonly synchronize?: boolean
   readonly db?: {
     readonly database?: string
-    readonly uri?: string
+    readonly url?: string
     readonly replication?: {
       readonly master: MysqlConnectionCredentialsOptions
       readonly slaves: MysqlConnectionCredentialsOptions[]
