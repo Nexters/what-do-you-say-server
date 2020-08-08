@@ -9,7 +9,7 @@ enum Property {
 @Entity('category')
 @Index(['isDisplay'])
 export class Category extends BaseEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'int' })
+  @PrimaryGeneratedColumn('increment', { name: 'category_id', type: 'int' })
   id!: number
 
   @Column('enum', { enum: Property, default: Property.SITUATION, comment: '속성' })
