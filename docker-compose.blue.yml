@@ -1,8 +1,8 @@
 version: '3'
 services:
-  what-do-you-say-blue-server:
-    image: what-do-you-say-server:latest
-    container_name: what-do-you-say-blue-server
+  what-do-you-say-server-blue:
+    image: what-do-you-say-server-blue:latest
+    container_name: what-do-you-say-server-blue
     volumes:
       - ./dist:/home/node/api/dist
       - ./src:/home/node/api/src
