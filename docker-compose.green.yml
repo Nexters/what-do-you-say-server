@@ -1,8 +1,8 @@
 version: '3'
 services:
-  what-do-you-say-green-server:
-    image: what-do-you-say-server:latest
-    container_name: what-do-you-say-green-server
+  what-do-you-say-server-green:
+    image: what-do-you-say-server-green:latest
+    container_name: what-do-you-say-server-green
     volumes:
       - ./dist:/home/node/api/dist
       - ./src:/home/node/api/src
