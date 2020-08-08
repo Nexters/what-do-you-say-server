@@ -25,7 +25,7 @@ export default {
         Error: {
           type: 'object',
           properties: {
-            errMsg: {
+            message: {
               type: 'string',
               description: '에러 메시지 전달',
             },

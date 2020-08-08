@@ -21,6 +21,9 @@ export const GreetingFactory = {
     return getRepository(Greeting).save(eventPromotion)
   },
 
-  deleteAll: async () =>
-    getRepository(Greeting).query('SET FOREIGN_KEY_CHECKS = 0; TRUNCATE TABLE Greeting; SET FOREIGN_KEY_CHECKS = 1;'),
+  deleteAll: async () => {
+    await getRepository(Greeting).query('SET FOREIGN_KEY_CHECKS = 0')
+    await getRepository(Greeting).query('TRUNCATE TABLE greeting')
+    await getRepository(Greeting).query('SET FOREIGN_KEY_CHECKS = 1')
+  },
 }

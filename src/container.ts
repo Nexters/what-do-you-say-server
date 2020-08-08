@@ -1,5 +1,6 @@
 import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asFunction } from 'awilix'
 import { Connection } from 'typeorm'
+import debug, { Debugger } from 'debug'
 import path from 'path'
 
 import GreetingRepository from '@repository/GreetingRepository'
@@ -41,8 +42,8 @@ export const initContainer = async (dbConnection: Connection | null): Promise<Aw
     })
   }
 
-  // eslint-disable-next-line no-console
-  console.log(container)
+  const appServerLogging: Debugger = debug('app:server')
+  appServerLogging(container)
 
   return container
 }

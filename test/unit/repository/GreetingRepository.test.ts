@@ -21,15 +21,13 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
 
   describe('findAll 메소드는', () => {
     afterEach(async () => {
-      await greetingRepository.query('SET FOREIGN_KEY_CHECKS = 0')
-      await greetingRepository.clear()
-      await greetingRepository.query('SET FOREIGN_KEY_CHECKS = 1')
+      await GreetingFactory.deleteAll()
     })
 
     test('조건에 부합하는 인사말 리스트를 반환한다.', async () => {
-      await GreetingFactory.create({})
+      await GreetingFactory.create({ isDeleted: false })
 
-      const greetings: Array<Greeting> = await greetingRepository.findAll({})
+      const greetings: Array<Greeting> = await greetingRepository.findAll({ isDeleted: false })
 
       expect(greetings.length).toBeGreaterThan(0)
     })
@@ -37,19 +35,16 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
 
   describe('findOneBy 메소드는', () => {
     afterEach(async () => {
-      await greetingRepository.query('SET FOREIGN_KEY_CHECKS = 0')
-      await greetingRepository.clear()
-      await greetingRepository.query('SET FOREIGN_KEY_CHECKS = 1')
+      await GreetingFactory.deleteAll()
     })
 
     test('Id를 통해 인사말을 반환한다.', async () => {
-      const greetingId: number = 1
-      await GreetingFactory.create({})
+      await GreetingFactory.create({ isDeleted: false })
 
-      const greeting: Greeting = (await greetingRepository.findOneBy(greetingId.toString())) as Greeting
+      const findGreeting: Greeting = (await greetingRepository.findOneBy({ id: 1, isDeleted: false })) as Greeting
 
-      expect(greeting).not.toBeUndefined()
-      expect(greeting.id).toBe(greetingId.toString())
+      expect(findGreeting).not.toBeUndefined()
+      expect(findGreeting.id).toBe('1')
     })
   })
 
@@ -57,9 +52,7 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
     let queryRunner: QueryRunner
 
     afterEach(async () => {
-      await queryRunner.query('SET FOREIGN_KEY_CHECKS = 0')
-      await queryRunner.clearDatabase()
-      await queryRunner.query('SET FOREIGN_KEY_CHECKS = 1')
+      await GreetingFactory.deleteAll()
     })
 
     test('인사말을 등록한다.', async () => {

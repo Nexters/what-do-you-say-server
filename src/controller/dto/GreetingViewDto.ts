@@ -2,7 +2,7 @@ import { Greeting } from '@entity/Greeting'
 import { Bookmark } from '@entity/Bookmark'
 
 export default class GreetingViewDto {
-  private id: bigint | undefined
+  private id: number | undefined
 
   private situation: string | undefined
 
@@ -16,7 +16,7 @@ export default class GreetingViewDto {
 
   private bookmarks: Array<Bookmark> | undefined
 
-  private setId(id: bigint): GreetingViewDto {
+  private setId(id: number): GreetingViewDto {
     this.id = id
     return this
   }
