@@ -27,5 +27,5 @@ else
 
 	docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
 
-  docker rmi ${DOCKER_APP_NAME}-blue
+	docker rmi ${DOCKER_APP_NAME}-blue
 fi
