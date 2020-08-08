@@ -17,7 +17,7 @@
     "pretty": "prettier --config .prettierrc --write \"{src,test}/**/*.ts\"",
     "lint": "eslint src/**/*.ts && eslint test/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts && eslint test/**/*.ts",
-    "test": "jest -i --forceExit",
+    "test": "jest -i --detectOpenHandles --forceExit",
     "type-check": "tsc --noEmit",
     "build:js": "babel src --out-dir dist --extensions '.ts'",
     "build": "npm run type-check && npm run build:js",

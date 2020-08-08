@@ -9,8 +9,10 @@ import cors from 'cors'
 
 import swaggerApiOption from '@infrastructure/express/swagger-api-option'
 import config from '@common/config'
+import { Server } from 'http'
+import * as http from 'http'
 
-export default (container: AwilixContainer): Express => {
+export default (container: AwilixContainer): Server => {
   const { host, port, env } = config
 
   const app: Express = express()
@@ -70,9 +72,13 @@ export default (container: AwilixContainer): Express => {
    */
   app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerApiOption }))
 
-  app.on('error', (err: Application) => appServerLogging('Server failed with client error: %s', err))
+  const httpExpressAppServer: Server = http.createServer(app)
 
-  app.listen(port, host, () => appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env))
+  httpExpressAppServer.on('error', (err: Application) => appServerLogging('Server failed with client error: %s', err))
 
-  return app
+  httpExpressAppServer.listen(port, host, () =>
+    appServerLogging('Express server listening on %s:%d, in %s mode', host, port, env),
+  )
+
+  return httpExpressAppServer
 }

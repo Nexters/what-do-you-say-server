@@ -16,7 +16,7 @@ import { Bookmark } from './Bookmark'
 @Index(['situation', 'sentenceLength', 'honorific', 'isDeleted'])
 export class Greeting extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { type: 'bigint' })
-  id!: bigint
+  id!: number
 
   @Column('varchar', { default: '', comment: '상황' })
   situation!: string
