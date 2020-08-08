@@ -39,6 +39,6 @@ export class Greeting extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at', comment: '수정 날짜' })
   updatedAt!: Date
 
-  @VersionColumn({ name: 'version', comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
+  @VersionColumn({ name: 'version', default: 0, comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
   version!: number
 }

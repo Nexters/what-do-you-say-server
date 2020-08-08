@@ -1,4 +1,4 @@
-import { EntityRepository, FindConditions, QueryRunner, Repository } from 'typeorm'
+import { EntityRepository, FindConditions, Repository } from 'typeorm'
 import CommonGreetingRepository from '@repository/CommonGreetingRepository'
 import { Greeting } from '@entity/Greeting'
 
@@ -12,7 +12,7 @@ export default class GreetingRepository extends Repository<Greeting> implements 
     return this.findOne(conditions)
   }
 
-  public async createOrUpdate(queryRunner: QueryRunner, greeting: Greeting): Promise<Greeting> {
-    return queryRunner.manager.save(greeting)
+  public async createOrUpdate(greeting: Greeting): Promise<Greeting> {
+    return this.save(greeting)
   }
 }
