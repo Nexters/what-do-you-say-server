@@ -13,7 +13,7 @@ export const initDatabase = async (): Promise<Connection> => {
     database,
     synchronize,
     entities: [entitiesPath],
-    extra: { charset: 'utf8mb4_general_ci' },
+    charset: 'utf8mb4_general_ci',
     namingStrategy: new SnakeNamingStrategy(),
     logging,
   })
