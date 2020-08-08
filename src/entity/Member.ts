@@ -9,7 +9,7 @@ enum LoginType {
 @Entity('member')
 @Unique(['key'])
 export class Member extends BaseEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  @PrimaryGeneratedColumn('increment', { name: 'member_id', type: 'bigint' })
   id!: number
 
   @Column('varchar', { default: '', comment: '고유키 값' })
