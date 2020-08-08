@@ -1,8 +1,8 @@
-import { Connection, QueryRunner } from 'typeorm'
+import { Connection } from 'typeorm'
 
-import GreetingRepository from '@repository/GreetingRepository'
-import { initDatabase } from '@infrastructure/typeorm'
 import { Greeting } from '@entity/Greeting'
+import { initDatabase } from '@infrastructure/typeorm'
+import GreetingRepository from '@repository/GreetingRepository'
 
 import { GreetingFactory } from '../../support/GreetingFactory'
 
@@ -49,26 +49,21 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
   })
 
   describe('createOrUpdate 메소드는', () => {
-    let queryRunner: QueryRunner
-
     afterEach(async () => {
       await GreetingFactory.deleteAll()
     })
 
     test('인사말을 등록한다.', async () => {
-      // given
-      queryRunner = dbConnection.createQueryRunner()
-
       const greetingId: string = '1'
       const greeting: Greeting = new Greeting()
 
       greeting.situation = '생일'
       greeting.honorific = '반말'
-      greeting.sentenceLength = '2줄'
+      greeting.sentenceLength = '1줄'
       greeting.contents = '생일 축하해!!'
 
       // when
-      const createdGreeting: Greeting = await greetingRepository.createOrUpdate(queryRunner, greeting)
+      const createdGreeting: Greeting = await greetingRepository.createOrUpdate(greeting)
 
       // then
       expect(createdGreeting.id).toBe(greetingId)

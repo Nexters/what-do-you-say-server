@@ -1,5 +1,4 @@
 import { Greeting } from '@entity/Greeting'
-import { Bookmark } from '@entity/Bookmark'
 
 export default class GreetingViewDto {
   private id: number | undefined
@@ -13,8 +12,6 @@ export default class GreetingViewDto {
   private contents: string | undefined
 
   private bookmarkCount: number | undefined
-
-  private bookmarks: Array<Bookmark> | undefined
 
   private setId(id: number): GreetingViewDto {
     this.id = id
@@ -46,11 +43,6 @@ export default class GreetingViewDto {
     return this
   }
 
-  private setBookmarks(bookmarks: Array<Bookmark>): GreetingViewDto {
-    this.bookmarks = bookmarks
-    return this
-  }
-
   public static of(greeting: Greeting): GreetingViewDto {
     return new GreetingViewDto()
       .setId(greeting.id)
@@ -59,6 +51,5 @@ export default class GreetingViewDto {
       .setSentenceLength(greeting.sentenceLength)
       .setContents(greeting.contents)
       .setBookmarkCount(greeting.bookmarkCount)
-      .setBookmarks(greeting.bookmarks)
   }
 }

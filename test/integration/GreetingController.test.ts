@@ -69,4 +69,36 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       expect(message).toBe('Not found Entity')
     })
   })
+
+  describe('POST /greetings', () => {
+    test('유효하지 않은 정보가 있다면, 상태 코드 400을 응답한다.', async () => {
+      const situation: string = '생일'
+      const honorific: string = '존댓말'
+      const sentenceLength: string = '1줄'
+      const contents: number = 1
+
+      const { status, body } = await request(httpExpressAppServer)
+        .post('/greetings')
+        .send({ situation, honorific, sentenceLength, contents })
+
+      expect(status).toBe(400)
+      expect(jsend.isValid(body)).toBe(true)
+    })
+
+    test('유효한 정보라면, 인사말을 등록하고 상태 코드 201을 응답한다.', async () => {
+      const situation: string = '생일'
+      const honorific: string = '존댓말'
+      const sentenceLength: string = '1줄'
+      const contents: string = '생일 축하해!!'
+
+      const { status, body } = await request(httpExpressAppServer)
+        .post('/greetings')
+        .send({ situation, honorific, sentenceLength, contents })
+      const { createdGreetingId } = body.data
+
+      expect(status).toBe(201)
+      expect(jsend.isValid(body)).toBe(true)
+      expect(createdGreetingId).toBe('1')
+    })
+  })
 })

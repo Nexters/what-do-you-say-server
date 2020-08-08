@@ -1,15 +1,12 @@
-import { Connection, FindConditions } from 'typeorm'
+import { FindConditions } from 'typeorm'
 
-import CommonGreetingRepository from '@repository/CommonGreetingRepository'
 import { Greeting } from '@entity/Greeting'
+import CommonGreetingRepository from '@repository/CommonGreetingRepository'
 
 export default class GreetingService {
-  private readonly typeOrmConnectionForTransaction: Connection
-
   private readonly greetingRepository: CommonGreetingRepository
 
-  constructor(typeOrmConnectionForTransaction: Connection, greetingRepository: CommonGreetingRepository) {
-    this.typeOrmConnectionForTransaction = typeOrmConnectionForTransaction
+  constructor(greetingRepository: CommonGreetingRepository) {
     this.greetingRepository = greetingRepository
   }
 
@@ -21,5 +18,10 @@ export default class GreetingService {
   public async findGreeting(greetingId: number): Promise<Greeting | undefined> {
     const conditions: FindConditions<Greeting> = { id: greetingId, isDeleted: false }
     return this.greetingRepository.findOneBy(conditions)
+  }
+
+  public async createGreeting(greeting: Greeting): Promise<number> {
+    const { id }: Partial<Greeting> = await this.greetingRepository.createOrUpdate(greeting)
+    return id
   }
 }

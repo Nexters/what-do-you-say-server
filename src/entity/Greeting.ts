@@ -4,18 +4,15 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  JoinTable,
-  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm'
-import { Bookmark } from './Bookmark'
 
 @Entity('greeting')
 @Index(['situation', 'sentenceLength', 'honorific', 'isDeleted'])
 export class Greeting extends BaseEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  @PrimaryGeneratedColumn('increment', { name: 'greeting_id', type: 'bigint' })
   id!: number
 
   @Column('varchar', { default: '', comment: '상황' })
@@ -42,10 +39,6 @@ export class Greeting extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at', comment: '수정 날짜' })
   updatedAt!: Date
 
-  @VersionColumn({ name: 'version', comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
+  @VersionColumn({ name: 'version', default: 0, comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
   version!: number
-
-  @ManyToMany(() => Bookmark, { cascade: true })
-  @JoinTable({ name: 'greeting_bookmark' })
-  bookmarks!: Array<Bookmark>
 }
