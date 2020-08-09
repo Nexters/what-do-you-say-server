@@ -4,6 +4,7 @@ import debug, { Debugger } from 'debug'
 import path from 'path'
 
 import GreetingRepository from '@repository/GreetingRepository'
+import BookmarkRepository from '@repository/BookmarkRepository'
 
 export const initContainer = async (dbConnection: Connection | null): Promise<AwilixContainer> => {
   const container: AwilixContainer = createContainer({
@@ -29,9 +30,16 @@ export const initContainer = async (dbConnection: Connection | null): Promise<Aw
   )
 
   if (dbConnection) {
-    // Custom Repository Injection
+    // Custom Repository Injection - Greeting
     container.register({
       greetingRepository: asFunction(() => dbConnection.getCustomRepository(GreetingRepository), {
+        lifetime: Lifetime.TRANSIENT,
+      }),
+    })
+
+    // Custom Repository Injection - Bookmark
+    container.register({
+      bookmarkRepository: asFunction(() => dbConnection.getCustomRepository(BookmarkRepository), {
         lifetime: Lifetime.TRANSIENT,
       }),
     })

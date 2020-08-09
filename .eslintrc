@@ -24,6 +24,7 @@
     "@typescript-eslint/semi": "off",
     "lines-between-class-members": "off",
     "@typescript-eslint/quotes": "off",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-param-reassign": "off"
   }
 }
