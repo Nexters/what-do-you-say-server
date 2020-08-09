@@ -13,6 +13,8 @@ export default class GreetingViewDto {
 
   private bookmarkCount: number | undefined
 
+  private isBookMarking: boolean | undefined
+
   private setId(id: number): GreetingViewDto {
     this.id = id
     return this
@@ -43,6 +45,11 @@ export default class GreetingViewDto {
     return this
   }
 
+  private setIsBookMarking(isBookMarking: boolean): GreetingViewDto {
+    this.isBookMarking = isBookMarking
+    return this
+  }
+
   public static of(greeting: Greeting): GreetingViewDto {
     return new GreetingViewDto()
       .setId(greeting.id)
@@ -51,5 +58,6 @@ export default class GreetingViewDto {
       .setSentenceLength(greeting.sentenceLength)
       .setContents(greeting.contents)
       .setBookmarkCount(greeting.bookmarkCount)
+      .setIsBookMarking(greeting.isBookMarking)
   }
 }

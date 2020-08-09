@@ -41,4 +41,6 @@ export class Greeting extends BaseEntity {
 
   @VersionColumn({ name: 'version', default: 0, comment: '트랜잭션 관리를 위해 사용하는 컬럼' })
   version!: number
+
+  isBookMarking: boolean = false
 }

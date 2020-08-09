@@ -29,6 +29,22 @@ export default class GreetingController {
    *  get:
    *    summary: 인사말 리스트 조회
    *    tags: [Greeting]
+   *    parameters:
+   *      - in: query
+   *        name: memberId
+   *        type: string
+   *        description: 사용자 아이디 전달
+   *        example: 1
+   *      - in: query
+   *        name: start
+   *        type: string
+   *        description: 리스트가 시작되는 인덱스 위치 전달
+   *        example: 0
+   *      - in: query
+   *        name: count
+   *        type: string
+   *        description: 인사말을 가져올 개수를 전달
+   *        example: 10
    *    responses:
    *      200:
    *        description: 성공
@@ -37,12 +53,22 @@ export default class GreetingController {
    */
   @GET()
   public async findGreetings(req: Request, res: Response, next: NextFunction) {
+    const memberId: number = parseInt(<string>req.query.memberId, 10)
+    const start: number = parseInt(<string>req.query.start, 10) || 0
+    const count: number = parseInt(<string>req.query.count, 10) || 10
+
     try {
-      const findGreetings: Array<Greeting> = await this.greetingService.findGreetings()
+      const [greetings, total]: [Array<Greeting>, number] = await this.greetingService.findGreetings(
+        memberId,
+        start,
+        count,
+      )
 
-      const greetings: Array<GreetingViewDto> = findGreetings.map((greeting: Greeting) => GreetingViewDto.of(greeting))
+      const greetingsViewDtos: Array<GreetingViewDto> = greetings.map((greeting: Greeting) =>
+        GreetingViewDto.of(greeting),
+      )
 
-      return success(res, 200)({ items: greetings })
+      return success(res, 200)({ items: greetingsViewDtos, start, count, total })
     } catch (error) {
       return next(error)
     }
@@ -50,10 +76,15 @@ export default class GreetingController {
 
   /**
    * @swagger
-   * /greetings/1:
+   * /greetings/{id}:
    *  get:
    *    summary: 인사말 조회
    *    tags: [Greeting]
+   *    parameters:
+   *      - in: path
+   *        name: id
+   *        type: string
+   *        example: 1
    *    responses:
    *      200:
    *        description: 성공
@@ -68,13 +99,13 @@ export default class GreetingController {
     const greetingId = parseInt(req.params.id, 10)
 
     try {
-      const findGreeting: Greeting | undefined = await this.greetingService.findGreeting(greetingId)
+      const greeting: Greeting | undefined = await this.greetingService.findGreeting(greetingId)
 
-      if (!findGreeting) return notFound(res)
+      if (!greeting) return notFound(res)
 
-      const greeting: GreetingViewDto = GreetingViewDto.of(findGreeting)
+      const greetingViewDto: GreetingViewDto = GreetingViewDto.of(greeting)
 
-      return success(res, 200)({ ...greeting })
+      return success(res, 200)({ ...greetingViewDto })
     } catch (error) {
       return next(error)
     }
