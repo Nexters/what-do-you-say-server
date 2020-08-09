@@ -3,16 +3,16 @@ import { Greeting } from '@entity/Greeting'
 
 export default class GreetingCreateDto {
   @IsString({ message: 'situation는 string값이어야 합니다.' })
-  private situation = ''
+  private situation: string = ''
 
   @IsString({ message: 'honorific는 string값이어야 합니다.' })
-  private honorific = ''
+  private honorific: string = ''
 
   @IsString({ message: 'sentenceLength는 string값이어야 합니다.' })
-  private sentenceLength = ''
+  private sentenceLength: string = ''
 
   @IsString({ message: 'contents는 string값이어야 합니다.' })
-  private contents = ''
+  private contents: string = ''
 
   public setSituation(situation: string): GreetingCreateDto {
     this.situation = situation

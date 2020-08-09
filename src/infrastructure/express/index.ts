@@ -70,7 +70,7 @@ export default (container: AwilixContainer): Server => {
    *        200:
    *          description: 성공
    */
-  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json({ ...swaggerApiOption }))
+  app.use('/swagger.json', (req: Request, res: Response) => res.status(200).json(swaggerApiSpec))
 
   const httpExpressAppServer: Server = http.createServer(app)
 

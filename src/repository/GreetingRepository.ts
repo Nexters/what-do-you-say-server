@@ -16,8 +16,12 @@ export default class GreetingRepository extends Repository<Greeting> implements 
     return this.findOne(conditions)
   }
 
-  public async createOrUpdate(greeting: Greeting): Promise<Greeting> {
+  public async createOne(greeting: Greeting): Promise<Greeting> {
     return this.save(greeting)
+  }
+
+  public async updateOne(greetingId: number, greeting: Partial<Greeting>): Promise<UpdateResult> {
+    return this.update(greetingId, greeting)
   }
 
   public async increaseCount(conditions: FindConditions<Greeting>): Promise<UpdateResult> {

@@ -109,4 +109,40 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       expect(createdGreetingId).toBe('1')
     })
   })
+
+  describe('PATCH /greetings', () => {
+    beforeEach(async () => {
+      await GreetingFactory.create({})
+    })
+
+    test('유효하지 않은 정보가 있다면, 상태 코드 400을 응답한다.', async () => {
+      const greetingId: number = -123
+      const situation: string = '설날'
+      const contents: number = 1
+
+      const { status, body } = await request(httpExpressAppServer)
+        .patch('/greetings')
+        .send({ greetingId, situation, contents })
+
+      expect(status).toBe(400)
+      expect(jsend.isValid(body)).toBe(true)
+    })
+
+    test('유효한 정보라면, 인사말을 수정하고 상태 코드 200을 응답한다.', async () => {
+      const greetingId: number = 1
+      const situation: string = '설날'
+      const contents: string = '새해 복 많이 받으세요'
+
+      const { status, body } = await request(httpExpressAppServer)
+        .patch('/greetings')
+        .send({ greetingId, situation, contents })
+      const { data } = body
+
+      expect(status).toBe(200)
+      expect(jsend.isValid(body)).toBe(true)
+      expect(data.id).toBe(greetingId.toString())
+      expect(data.situation).toBe(situation)
+      expect(data.contents).toBe(contents)
+    })
+  })
 })
