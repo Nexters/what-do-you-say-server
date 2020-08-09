@@ -1,7 +1,9 @@
-import { FindConditions, FindManyOptions } from 'typeorm'
+import { pickBy, isNull, isUndefined } from 'lodash'
+import { FindConditions, FindManyOptions, UpdateResult } from 'typeorm'
 
 import CommonGreetingRepository from '@repository/CommonGreetingRepository'
 import CommonBookmarkRepository from '@repository/CommonBookmarkRepository'
+import { GreetingListView } from '@common/types/greeting-list-view'
 import { Greeting } from '@entity/Greeting'
 import { Bookmark } from '@entity/Bookmark'
 
@@ -15,7 +17,11 @@ export default class GreetingService {
     this.bookmarkRepository = bookmarkRepository
   }
 
-  public async findGreetings(memberId: number, start: number, count: number): Promise<[Array<Greeting>, number]> {
+  public async findGreetings(
+    memberId: number,
+    start: number,
+    count: number,
+  ): Promise<[Array<GreetingListView>, number]> {
     const greetingOptions: FindManyOptions<Greeting> = {
       where: { isDeleted: false },
       skip: start,
@@ -45,12 +51,24 @@ export default class GreetingService {
   }
 
   public async createGreeting(greeting: Greeting): Promise<number> {
-    const { id }: Partial<Greeting> = await this.greetingRepository.createOrUpdate(greeting)
+    const { id }: Greeting = await this.greetingRepository.createOne(greeting)
 
     return id
   }
 
-  public _buildResultGreetings = (greetings: Array<Greeting>, bookmarks: Array<Bookmark>): Array<Greeting> => {
+  public async updateGreeing(greeting: Greeting): Promise<Greeting | undefined> {
+    const partialGreeting: Partial<Greeting> = pickBy({ ...greeting }, (v) => !isNull(v) && !isUndefined(v))
+
+    const conditions: FindConditions<Greeting> = { id: greeting.id, isDeleted: false }
+
+    const { raw }: UpdateResult = await this.greetingRepository.updateOne(greeting.id, partialGreeting)
+
+    if (!raw.changedRows) return undefined
+
+    return this.greetingRepository.findOneBy(conditions)
+  }
+
+  public _buildResultGreetings = (greetings: Array<Greeting>, bookmarks: Array<Bookmark>): Array<GreetingListView> => {
     return this._checkBookMarkStatus(greetings, this._buildFlagForIdChecking(bookmarks))
   }
 
@@ -61,10 +79,9 @@ export default class GreetingService {
     }, {})
   }
 
-  public _checkBookMarkStatus = (greetings: Array<Greeting>, flagForIdChecking: object): Array<Greeting> => {
+  public _checkBookMarkStatus = (greetings: Array<Greeting>, flagForIdChecking: object): Array<GreetingListView> => {
     return greetings.map((greeting: Greeting) => {
-      if (flagForIdChecking[greeting.id]) greeting.isBookMarking = true
-      return { ...greeting }
-    }) as Array<Greeting>
+      return { ...greeting, isBookMarking: !!flagForIdChecking[greeting.id] }
+    })
   }
 }

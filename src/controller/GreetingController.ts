@@ -1,13 +1,16 @@
 import { NextFunction, Request, Response } from 'express'
-import { before, GET, POST, route } from 'awilix-express'
+import { before, GET, PATCH, POST, route } from 'awilix-express'
 
 import { notFound, success } from '@infrastructure/express/response'
-import { validGreetingCreateDto } from '@infrastructure/express/middleware'
+import { validGreetingCreateDto, validGreetingUpdateDto } from '@infrastructure/express/middleware'
 
+import { Greeting } from '@entity/Greeting'
+import { GreetingListView } from '@common/types/greeting-list-view'
+import GreetingService from '@service/GreetingService'
 import GreetingViewDto from '@controller/dto/GreetingViewDto'
 import GreetingCreateDto from '@controller/dto/GreetingCreateDto'
-import GreetingService from '@service/GreetingService'
-import { Greeting } from '@entity/Greeting'
+import GreetingUpdateDto from '@controller/dto/GreetingUpdateDto'
+import GreetingListViewDto from '@controller/dto/GreetingListViewDto'
 
 /**
  * @swagger
@@ -58,14 +61,14 @@ export default class GreetingController {
     const count: number = parseInt(<string>req.query.count, 10) || 10
 
     try {
-      const [greetings, total]: [Array<Greeting>, number] = await this.greetingService.findGreetings(
+      const [greetings, total]: [Array<GreetingListView>, number] = await this.greetingService.findGreetings(
         memberId,
         start,
         count,
       )
 
-      const greetingsViewDtos: Array<GreetingViewDto> = greetings.map((greeting: Greeting) =>
-        GreetingViewDto.of(greeting),
+      const greetingsViewDtos: Array<GreetingListViewDto> = greetings.map((greeting: GreetingListView) =>
+        GreetingListViewDto.of(greeting),
       )
 
       return success(res, 200)({ items: greetingsViewDtos, start, count, total })
@@ -154,6 +157,63 @@ export default class GreetingController {
       )
 
       return success(res, 201)({ createdGreetingId })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  /**
+   * @swagger
+   * /greetings:
+   *  patch:
+   *    summary: 인사말 수정
+   *    tags: [Greeting]
+   *    parameters:
+   *      - in: body
+   *        name: body
+   *        schema:
+   *          type: obejct
+   *          properties:
+   *            greetingId:
+   *              type: number
+   *              example: 1
+   *            situation:
+   *              type: string
+   *              example: 생일
+   *            honorific:
+   *              type: string
+   *              example: 반말
+   *            sentenceLength:
+   *              type: string
+   *              example: 1줄
+   *            contents:
+   *              type: string
+   *              example: 생일 축하해!
+   *    responses:
+   *      200:
+   *        description: 인사말 수정 성공
+   *      400:
+   *        $ref: '#/components/res/BadRequest'
+   *      404:
+   *        $ref: '#/components/res/NotFound'
+   *      500:
+   *        $ref: '#/components/res/InternalServerError'
+   */
+  @PATCH()
+  @before(validGreetingUpdateDto)
+  public async updateGreeting(req: Request, res: Response, next: NextFunction) {
+    const { greetingUpdateDto } = req.body
+
+    try {
+      const updatedGreeting: Greeting | undefined = (await this.greetingService.updateGreeing(
+        GreetingUpdateDto.toEntity(greetingUpdateDto),
+      )) as Greeting
+
+      if (!updatedGreeting) return notFound(res)
+
+      const greetingViewDto: GreetingViewDto = GreetingViewDto.of(updatedGreeting)
+
+      return success(res, 200)({ ...greetingViewDto })
     } catch (error) {
       return next(error)
     }

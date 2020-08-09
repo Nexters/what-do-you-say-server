@@ -47,7 +47,7 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
     })
   })
 
-  describe('createOrUpdate 메소드는', () => {
+  describe('createOne 메소드는', () => {
     test('인사말을 등록한다.', async () => {
       const greetingId: string = '1'
       const greeting: Greeting = new Greeting()
@@ -58,7 +58,7 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
       greeting.contents = '생일 축하해!!'
 
       // when
-      const createdGreeting: Greeting = await greetingRepository.createOrUpdate(greeting)
+      const createdGreeting: Greeting = await greetingRepository.createOne(greeting)
 
       // then
       expect(createdGreeting.id).toBe(greetingId)
@@ -86,6 +86,24 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
 
       expect(raw.changedRows).toBe(1)
       expect(greeting.bookmarkCount).toBe(9)
+    })
+  })
+
+  describe('updateOne 메소드는', () => {
+    test('인사말을 수정한다.', async () => {
+      await GreetingFactory.create({ situation: '설날', contents: '새해 복 많이 받아!' })
+      const greeting: Greeting = new Greeting()
+
+      greeting.id = 1
+      greeting.situation = '생일'
+      greeting.contents = '생일 축하해!!'
+
+      const { raw }: UpdateResult = await greetingRepository.updateOne(greeting.id, greeting)
+      const findGreeting: Greeting = (await greetingRepository.findOneBy({ id: 1, isDeleted: false })) as Greeting
+
+      expect(raw.changedRows).toBe(1)
+      expect(findGreeting.situation).toBe(greeting.situation)
+      expect(findGreeting.contents).toBe(greeting.contents)
     })
   })
 })
