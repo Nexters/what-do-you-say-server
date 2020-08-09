@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Greeting } from '@entity/Greeting'
 
 @Entity('bookmark')
@@ -12,11 +12,7 @@ export class Bookmark extends BaseEntity {
   @Column('bigint', { default: 0, comment: '회원 ID' })
   memberId!: number
 
-  @ManyToMany(() => Greeting, { cascade: true })
-  @JoinTable({
-    name: 'bookmark_greeting',
-    joinColumn: { name: 'bookmark_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'greeting_id', referencedColumnName: 'id' },
-  })
-  greetings!: Array<Greeting>
+  @ManyToOne(() => Greeting, (greeting: Greeting) => greeting.id)
+  @JoinColumn({ name: 'greeting_id' })
+  greeting!: Greeting
 }

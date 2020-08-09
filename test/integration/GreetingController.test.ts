@@ -4,8 +4,10 @@ import { Server } from 'http'
 import { Connection } from 'typeorm'
 import { initContainer } from '../../src/container'
 import { GreetingFactory } from '../support/GreetingFactory'
+import { BookmarkFactory } from '../support/BookmarkFactory'
 import { initDatabase } from '@infrastructure/typeorm'
 import initExpress from '@infrastructure/express'
+import { Greeting } from '@entity/Greeting'
 
 describe('API Integration Test (WEB HTTP) :: Greeting', () => {
   let dbConnection: Connection
@@ -27,13 +29,19 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
 
   describe('GET /greetings', () => {
     beforeEach(async () => {
-      await GreetingFactory.create({ isDeleted: false })
+      const greeting: Greeting = await GreetingFactory.create({})
+      await BookmarkFactory.create({ isOn: true, memberId: 1, greeting })
     })
 
     test('인사말 리스트를 반환하고, 상태 코드 200을 응답한다.', async () => {
       const greetingId: string = '1'
+      const memberId: number = 1
+      const start: number = 0
+      const count: number = 10
 
-      const { status, body } = await request(httpExpressAppServer).get('/greetings')
+      const { status, body } = await request(httpExpressAppServer).get(
+        `/greetings?memberId=${memberId}&start=${start}&count=${count}`,
+      )
       const { items } = body.data
 
       expect(status).toBe(200)
