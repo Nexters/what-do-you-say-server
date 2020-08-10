@@ -221,7 +221,7 @@ export default class GreetingController {
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(updatedGreeting)
 
-      return success(res, 200)({ ...greetingViewDto })
+      return success(res, 200)(<GreetingViewDto>greetingViewDto)
     } catch (error) {
       return next(error)
     }
