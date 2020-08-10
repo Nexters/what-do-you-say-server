@@ -71,7 +71,10 @@ export default class GreetingController {
         GreetingListViewDto.of(greeting),
       )
 
-      return success(res, 200)({ items: greetingsViewDtos, start, count, total })
+      return success<{ items: GreetingListViewDto[]; start: number; count: number; total: number }>(
+        res,
+        200,
+      )({ items: greetingsViewDtos, start, count, total })
     } catch (error) {
       return next(error)
     }
@@ -108,7 +111,7 @@ export default class GreetingController {
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(greeting)
 
-      return success(res, 200)({ ...greetingViewDto })
+      return success<GreetingViewDto>(res, 200)(greetingViewDto)
     } catch (error) {
       return next(error)
     }
@@ -156,7 +159,7 @@ export default class GreetingController {
         GreetingCreateDto.toEntity(greetingCreateDto),
       )
 
-      return success(res, 201)({ createdGreetingId })
+      return success<{ createdGreetingId: number }>(res, 201)({ createdGreetingId })
     } catch (error) {
       return next(error)
     }
