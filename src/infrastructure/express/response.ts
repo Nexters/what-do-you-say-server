@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Response } from 'express'
 import jsend from 'jsend'
 
-export const success = (res: Response, status: number) => (data: Object) =>
-  res.status(status || 200).json(jsend.success(data))
+export const success = <T>(res: Response<T>, status: number) => (data: T) =>
+  res.status(status || 200).json(jsend.success(data) as any)
 
 export const error = (res: Response, { code, message, data }, status: number = 500) =>
   res.status(status).json(jsend.error({ code, message, data }))
