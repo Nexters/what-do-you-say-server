@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { badRequest } from '@infrastructure/express/response'
 import GreetingCreateDto from '@controller/dto/GreetingCreateDto'
 import GreetingUpdateDto from '@controller/dto/GreetingUpdateDto'
+import BookmarkCreateDto from '@controller/dto/BookmarkCreateDto'
 
 export const validGreetingCreateDto = async (req: Request, res: Response, next: NextFunction) => {
   const { situation, honorific, sentenceLength, contents } = req.body
@@ -21,7 +22,7 @@ export const validGreetingCreateDto = async (req: Request, res: Response, next: 
   } catch (error) {
     const messages = error.map(({ constraints }) => constraints)
 
-    return badRequest(res, { code: 400, message: messages, data: {} })
+    return badRequest(res, { message: messages })
   }
 }
 
@@ -44,6 +45,27 @@ export const validGreetingUpdateDto = async (req: Request, res: Response, next: 
   } catch (error) {
     const messages = error.map(({ constraints }) => constraints)
 
-    return badRequest(res, { code: 400, message: messages, data: {} })
+    return badRequest(res, { message: messages })
+  }
+}
+
+export const validBookmarkCreateDto = async (req: Request, res: Response, next: NextFunction) => {
+  const { memberId, greetingId, isOn } = req.body
+
+  try {
+    const bookmarkUpdateDto: BookmarkCreateDto = new BookmarkCreateDto()
+      .setMemberId(memberId)
+      .setGreetingId(greetingId)
+      .setIsOn(isOn)
+
+    await bookmarkUpdateDto.validate()
+
+    req.body = { memberId, greetingId, isOn }
+
+    return next()
+  } catch (error) {
+    const messages = error.map(({ constraints }) => constraints)
+
+    return badRequest(res, { message: messages })
   }
 }

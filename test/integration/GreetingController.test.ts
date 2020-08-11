@@ -68,11 +68,11 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const greetingId: string = '2'
 
       const { status, body } = await request(httpExpressAppServer).get(`/greetings/${greetingId}`)
-      const { message } = body.data
+      const { message } = body
 
       expect(status).toBe(404)
       expect(jsend.isValid(body)).toBe(true)
-      expect(message).toBe('Not found Entity')
+      expect(message).toBe('Greeting Entity를 찾을 수 없습니다.')
     })
   })
 

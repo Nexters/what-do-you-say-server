@@ -1,19 +1,19 @@
 import { GreetingListView } from '@common/types/greeting-list-view'
 
 export default class GreetingListViewDto {
-  private id: number | undefined
+  private id: number = 0
 
-  private situation: string | undefined
+  private situation: string = ''
 
-  private honorific: string | undefined
+  private honorific: string = ''
 
-  private sentenceLength: string | undefined
+  private sentenceLength: string = ''
 
-  private contents: string | undefined
+  private contents: string = ''
 
-  private bookmarkCount: number | undefined
+  private bookmarkCount: number = 0
 
-  private isBookMarking: boolean | undefined
+  private isBookMarking: boolean = false
 
   private setId(id: number): GreetingListViewDto {
     this.id = id

@@ -106,7 +106,7 @@ export default class GreetingController {
     try {
       const greeting: Greeting | undefined = await this.greetingService.findGreeting(greetingId)
 
-      if (!greeting) return notFound(res)
+      if (!greeting) return notFound(res, { message: 'Greeting Entity를 찾을 수 없습니다.' })
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(greeting)
 
@@ -213,7 +213,7 @@ export default class GreetingController {
         GreetingUpdateDto.toEntity(greetingUpdateDto),
       )) as Greeting
 
-      if (!updatedGreeting) return notFound(res)
+      if (!updatedGreeting) return notFound(res, { message: 'Greeting Entity를 찾을 수 없습니다.' })
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(updatedGreeting)
 

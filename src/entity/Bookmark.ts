@@ -1,7 +1,8 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Greeting } from '@entity/Greeting'
 
 @Entity('bookmark')
+@Index(['memberId', 'greeting'])
 export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'bookmark_id', type: 'bigint' })
   id!: number

@@ -39,10 +39,6 @@ export default {
               type: 'array',
               example: "[ { isString: 'contents는 string값이어야 합니다.' } ]",
             },
-            data: {
-              type: 'object',
-              description: '{}',
-            },
           },
         },
         NotFound: {
@@ -50,16 +46,11 @@ export default {
           properties: {
             status: {
               type: 'string',
-              example: 'fail',
+              example: 'error',
             },
-            data: {
-              type: 'object',
-              properties: {
-                message: {
-                  type: 'string',
-                  example: 'Not found Entity',
-                },
-              },
+            message: {
+              type: 'string',
+              example: '{EntityName}을 찾을 수 없습니다.',
             },
           },
         },
@@ -130,6 +121,14 @@ export default {
           createdGreetingId: {
             type: 'number',
             format: 'int32',
+          },
+        },
+      },
+      CreatedBookmark: {
+        type: 'object',
+        properties: {
+          isComplete: {
+            type: 'boolean',
           },
         },
       },

@@ -43,6 +43,11 @@ export const initContainer = async (dbConnection: Connection | null): Promise<Aw
         lifetime: Lifetime.TRANSIENT,
       }),
     })
+
+    // TypeORM Connection Injection For Transaction
+    container.register({
+      typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+    })
   }
 
   const appServerLogging: Debugger = debug('app:server')
