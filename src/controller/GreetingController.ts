@@ -159,7 +159,7 @@ export default class GreetingController {
         GreetingCreateDto.toEntity(greetingCreateDto),
       )
 
-      return res.status(200).json({ createdGreetingId })
+      return res.status(201).json({ createdGreetingId })
     } catch (error) {
       return next(error)
     }
