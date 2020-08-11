@@ -23,6 +23,9 @@ describe('Service :: GreetingService 클래스 테스트', () => {
           [{ isOn: true, memberId: 1, greeting: ({ id: 1, isDeleted: false } as unknown) as Greeting } as Bookmark],
           0,
         ]),
+      findOneBy: (): Promise<Bookmark | undefined> => Promise.resolve({} as Bookmark),
+      createOne: (): Promise<Bookmark> => Promise.resolve({} as Bookmark),
+      updateOne: (): Promise<UpdateResult> => Promise.resolve({} as UpdateResult),
     }
 
     const greetingService = new GreetingService(mockGreetingRepository, mockBookmarkRepository)
@@ -50,6 +53,9 @@ describe('Service :: GreetingService 클래스 테스트', () => {
 
     const mockBookmarkRepository: CommonBookmarkRepository = {
       findAll: (): Promise<[Array<Bookmark>, number]> => Promise.resolve([[{} as Bookmark], 0]),
+      findOneBy: (): Promise<Bookmark | undefined> => Promise.resolve({} as Bookmark),
+      createOne: (): Promise<Bookmark> => Promise.resolve({} as Bookmark),
+      updateOne: (): Promise<UpdateResult> => Promise.resolve({} as UpdateResult),
     }
 
     const greetingService = new GreetingService(mockGreetingRepository, mockBookmarkRepository)
@@ -76,6 +82,9 @@ describe('Service :: GreetingService 클래스 테스트', () => {
 
     const mockBookmarkRepository: CommonBookmarkRepository = {
       findAll: (): Promise<[Array<Bookmark>, number]> => Promise.resolve([[{} as Bookmark], 0]),
+      findOneBy: (): Promise<Bookmark | undefined> => Promise.resolve({} as Bookmark),
+      createOne: (): Promise<Bookmark> => Promise.resolve({ id: 1 } as Bookmark),
+      updateOne: (): Promise<UpdateResult> => Promise.resolve({} as UpdateResult),
     }
 
     const greetingService = new GreetingService(mockGreetingRepository, mockBookmarkRepository)
@@ -107,6 +116,9 @@ describe('Service :: GreetingService 클래스 테스트', () => {
 
     const mockBookmarkRepository: CommonBookmarkRepository = {
       findAll: (): Promise<[Array<Bookmark>, number]> => Promise.resolve([[{} as Bookmark], 0]),
+      findOneBy: (): Promise<Bookmark | undefined> => Promise.resolve({} as Bookmark),
+      createOne: (): Promise<Bookmark> => Promise.resolve({} as Bookmark),
+      updateOne: (): Promise<UpdateResult> => Promise.resolve({ raw: {} } as UpdateResult),
     }
 
     const greetingService = new GreetingService(mockGreetingRepository, mockBookmarkRepository)

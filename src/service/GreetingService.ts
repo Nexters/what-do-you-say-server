@@ -68,18 +68,18 @@ export default class GreetingService {
     return this.greetingRepository.findOneBy(conditions)
   }
 
-  public _buildResultGreetings = (greetings: Array<Greeting>, bookmarks: Array<Bookmark>): Array<GreetingListView> => {
+  private _buildResultGreetings = (greetings: Array<Greeting>, bookmarks: Array<Bookmark>): Array<GreetingListView> => {
     return this._checkBookMarkStatus(greetings, this._buildFlagForIdChecking(bookmarks))
   }
 
-  public _buildFlagForIdChecking = (bookmarks: Array<Bookmark>): object => {
+  private _buildFlagForIdChecking = (bookmarks: Array<Bookmark>): object => {
     return bookmarks.reduce((acc: object, { greeting }: Bookmark) => {
       acc[greeting.id] = true
       return acc
     }, {})
   }
 
-  public _checkBookMarkStatus = (greetings: Array<Greeting>, flagForIdChecking: object): Array<GreetingListView> => {
+  private _checkBookMarkStatus = (greetings: Array<Greeting>, flagForIdChecking: object): Array<GreetingListView> => {
     return greetings.map((greeting: Greeting) => {
       return { ...greeting, isBookMarking: !!flagForIdChecking[greeting.id] }
     })

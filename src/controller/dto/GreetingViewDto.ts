@@ -1,17 +1,17 @@
 import { Greeting } from '@entity/Greeting'
 
 export default class GreetingViewDto {
-  private id: number | undefined
+  private id: number = 0
 
-  private situation: string | undefined
+  private situation: string = ''
 
-  private honorific: string | undefined
+  private honorific: string = ''
 
-  private sentenceLength: string | undefined
+  private sentenceLength: string = ''
 
-  private contents: string | undefined
+  private contents: string = ''
 
-  private bookmarkCount: number | undefined
+  private bookmarkCount: number = 0
 
   private setId(id: number): GreetingViewDto {
     this.id = id
