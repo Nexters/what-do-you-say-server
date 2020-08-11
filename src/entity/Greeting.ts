@@ -10,6 +10,7 @@ import {
 } from 'typeorm'
 
 @Entity('greeting')
+@Index(['id', 'isDeleted'])
 @Index(['situation', 'sentenceLength', 'honorific', 'isDeleted'])
 export class Greeting extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'greeting_id', type: 'bigint' })

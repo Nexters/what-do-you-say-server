@@ -8,6 +8,6 @@ export const success = <T>(res: Response<T>, status: number) => (data: T) =>
 export const error = (res: Response, { code, message, data }, status: number = 500) =>
   res.status(status).json(jsend.error({ code, message, data }))
 
-export const badRequest = (res: Response, { code, message, data }) => this.error(res, { code, message, data }, 400)
+export const badRequest = (res: Response, { message }) => this.error(res, { message }, 400)
 
-export const notFound = (res: Response) => res.status(404).json(jsend.fail({ message: 'Not found Entity' }))
+export const notFound = (res: Response, { message }) => this.error(res, { message }, 404)

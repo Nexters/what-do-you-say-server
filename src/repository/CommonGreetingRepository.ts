@@ -1,4 +1,4 @@
-import { FindConditions, FindManyOptions, UpdateResult } from 'typeorm'
+import { FindConditions, FindManyOptions, QueryRunner, UpdateResult } from 'typeorm'
 import { Greeting } from '@entity/Greeting'
 
 export default interface CommonGreetingRepository {
@@ -6,6 +6,6 @@ export default interface CommonGreetingRepository {
   findOneBy(conditions: FindConditions<Greeting>): Promise<Greeting | undefined>
   createOne(greeting: Greeting): Promise<Greeting>
   updateOne(greetingId: number, greeting: Partial<Greeting>): Promise<UpdateResult>
-  increaseCount(conditions: FindConditions<Greeting>): Promise<UpdateResult>
-  decreaseCount(conditions: FindConditions<Greeting>): Promise<UpdateResult>
+  increaseCount(queryRunner: QueryRunner, conditions: FindConditions<Greeting>): Promise<UpdateResult>
+  decreaseCount(queryRunner: QueryRunner, conditions: FindConditions<Greeting>): Promise<UpdateResult>
 }

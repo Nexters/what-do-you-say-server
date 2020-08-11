@@ -1,4 +1,4 @@
-import { EntityRepository, FindConditions, FindManyOptions, Repository, UpdateResult } from 'typeorm'
+import { EntityRepository, FindConditions, FindManyOptions, QueryRunner, Repository, UpdateResult } from 'typeorm'
 import CommonGreetingRepository from '@repository/CommonGreetingRepository'
 import { Greeting } from '@entity/Greeting'
 
@@ -24,11 +24,11 @@ export default class GreetingRepository extends Repository<Greeting> implements 
     return this.update(greetingId, greeting)
   }
 
-  public async increaseCount(conditions: FindConditions<Greeting>): Promise<UpdateResult> {
-    return this.increment(conditions, this.BOOKMARK_COUNT, this.NUMBER_ONE)
+  public async increaseCount(queryRunner: QueryRunner, conditions: FindConditions<Greeting>): Promise<UpdateResult> {
+    return queryRunner.manager.increment('Greeting', conditions, this.BOOKMARK_COUNT, this.NUMBER_ONE)
   }
 
-  public async decreaseCount(conditions: FindConditions<Greeting>): Promise<UpdateResult> {
-    return this.decrement(conditions, this.BOOKMARK_COUNT, this.NUMBER_ONE)
+  public async decreaseCount(queryRunner: QueryRunner, conditions: FindConditions<Greeting>): Promise<UpdateResult> {
+    return queryRunner.manager.decrement('Greeting', conditions, this.BOOKMARK_COUNT, this.NUMBER_ONE)
   }
 }

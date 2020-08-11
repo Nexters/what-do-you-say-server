@@ -1,4 +1,4 @@
-import { Connection, UpdateResult } from 'typeorm'
+import { Connection, QueryRunner, UpdateResult } from 'typeorm'
 
 import { Greeting } from '@entity/Greeting'
 import { initDatabase } from '@infrastructure/typeorm'
@@ -69,7 +69,8 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
     test('북마크 Count의 값을 +1 한다.', async () => {
       await GreetingFactory.create({ bookmarkCount: 10 })
 
-      const { raw }: UpdateResult = await greetingRepository.increaseCount({ id: 1, isDeleted: false })
+      const queryRunner: QueryRunner = dbConnection.createQueryRunner()
+      const { raw }: UpdateResult = await greetingRepository.increaseCount(queryRunner, { id: 1, isDeleted: false })
       const greeting: Greeting = (await greetingRepository.findOneBy({ id: 1, isDeleted: false })) as Greeting
 
       expect(raw.changedRows).toBe(1)
@@ -81,7 +82,8 @@ describe('Repository :: GreetingRepoistory 클래스 테스트', () => {
     test('북마크 Count의 값을 -1 한다.', async () => {
       await GreetingFactory.create({ bookmarkCount: 10 })
 
-      const { raw }: UpdateResult = await greetingRepository.decreaseCount({ id: 1, isDeleted: false })
+      const queryRunner: QueryRunner = dbConnection.createQueryRunner()
+      const { raw }: UpdateResult = await greetingRepository.decreaseCount(queryRunner, { id: 1, isDeleted: false })
       const greeting: Greeting = (await greetingRepository.findOneBy({ id: 1, isDeleted: false })) as Greeting
 
       expect(raw.changedRows).toBe(1)
