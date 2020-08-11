@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { before, GET, PATCH, POST, route } from 'awilix-express'
 
-import { notFound, success } from '@infrastructure/express/response'
+import { notFound } from '@infrastructure/express/response'
 import { validGreetingCreateDto, validGreetingUpdateDto } from '@infrastructure/express/middleware'
 
 import { Greeting } from '@entity/Greeting'
@@ -50,7 +50,8 @@ export default class GreetingController {
    *        example: 10
    *    responses:
    *      200:
-   *        description: 성공
+   *        schema:
+   *          $ref: '#/definitions/Greetings'
    *      500:
    *        $ref: '#/components/res/InternalServerError'
    */
@@ -71,15 +72,7 @@ export default class GreetingController {
         GreetingListViewDto.of(greeting),
       )
 
-      return success(
-        res,
-        200,
-      )(<{ items: GreetingListViewDto[]; start: number; count: number; total: number }>{
-        items: greetingsViewDtos,
-        start,
-        count,
-        total,
-      })
+      return res.status(200).json({ items: greetingsViewDtos, start, count, total })
     } catch (error) {
       return next(error)
     }
@@ -98,7 +91,8 @@ export default class GreetingController {
    *        example: 1
    *    responses:
    *      200:
-   *        description: 성공
+   *        schema:
+   *          $ref: '#/definitions/Greeting'
    *      404:
    *        $ref: '#/components/res/NotFound'
    *      500:
@@ -116,7 +110,7 @@ export default class GreetingController {
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(greeting)
 
-      return success(res, 200)(<GreetingViewDto>greetingViewDto)
+      return res.status(200).json(greetingViewDto)
     } catch (error) {
       return next(error)
     }
@@ -132,7 +126,7 @@ export default class GreetingController {
    *      - in: body
    *        name: body
    *        schema:
-   *          type: obejct
+   *          type: object
    *          properties:
    *            situation:
    *              type: string
@@ -148,7 +142,8 @@ export default class GreetingController {
    *              example: 생일 축하해!
    *    responses:
    *      201:
-   *        description: 인사말 등록 성공
+   *        schema:
+   *          $ref: '#/definitions/CreatedGreeting'
    *      400:
    *        $ref: '#/components/res/BadRequest'
    *      500:
@@ -164,7 +159,7 @@ export default class GreetingController {
         GreetingCreateDto.toEntity(greetingCreateDto),
       )
 
-      return success(res, 201)(<{ createdGreetingId: number }>{ createdGreetingId })
+      return res.status(200).json({ createdGreetingId })
     } catch (error) {
       return next(error)
     }
@@ -180,7 +175,7 @@ export default class GreetingController {
    *      - in: body
    *        name: body
    *        schema:
-   *          type: obejct
+   *          type: object
    *          properties:
    *            greetingId:
    *              type: number
@@ -199,7 +194,8 @@ export default class GreetingController {
    *              example: 생일 축하해!
    *    responses:
    *      200:
-   *        description: 인사말 수정 성공
+   *        schema:
+   *          $ref: '#/definitions/Greeting'
    *      400:
    *        $ref: '#/components/res/BadRequest'
    *      404:
@@ -221,7 +217,7 @@ export default class GreetingController {
 
       const greetingViewDto: GreetingViewDto = GreetingViewDto.of(updatedGreeting)
 
-      return success(res, 200)(<GreetingViewDto>greetingViewDto)
+      return res.status(200).json(greetingViewDto)
     } catch (error) {
       return next(error)
     }
