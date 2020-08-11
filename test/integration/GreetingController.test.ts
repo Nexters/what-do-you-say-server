@@ -42,10 +42,9 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const { status, body } = await request(httpExpressAppServer).get(
         `/greetings?memberId=${memberId}&start=${start}&count=${count}`,
       )
-      const { items } = body.data
+      const { items } = body
 
       expect(status).toBe(200)
-      expect(jsend.isValid(body)).toBe(true)
       expect(items[0].id).toBe(greetingId)
     })
   })
@@ -59,10 +58,9 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const greetingId: string = '1'
 
       const { status, body } = await request(httpExpressAppServer).get(`/greetings/${greetingId}`)
-      const { id } = body.data
+      const { id } = body
 
       expect(status).toBe(200)
-      expect(jsend.isValid(body)).toBe(true)
       expect(id).toBe(greetingId)
     })
 
@@ -85,12 +83,11 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const sentenceLength: string = '1줄'
       const contents: number = 1
 
-      const { status, body } = await request(httpExpressAppServer)
+      const { status } = await request(httpExpressAppServer)
         .post('/greetings')
         .send({ situation, honorific, sentenceLength, contents })
 
       expect(status).toBe(400)
-      expect(jsend.isValid(body)).toBe(true)
     })
 
     test('유효한 정보라면, 인사말을 등록하고 상태 코드 201을 응답한다.', async () => {
@@ -102,10 +99,9 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const { status, body } = await request(httpExpressAppServer)
         .post('/greetings')
         .send({ situation, honorific, sentenceLength, contents })
-      const { createdGreetingId } = body.data
+      const { createdGreetingId } = body
 
       expect(status).toBe(201)
-      expect(jsend.isValid(body)).toBe(true)
       expect(createdGreetingId).toBe('1')
     })
   })
@@ -120,12 +116,11 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const situation: string = '설날'
       const contents: number = 1
 
-      const { status, body } = await request(httpExpressAppServer)
+      const { status } = await request(httpExpressAppServer)
         .patch('/greetings')
         .send({ greetingId, situation, contents })
 
       expect(status).toBe(400)
-      expect(jsend.isValid(body)).toBe(true)
     })
 
     test('유효한 정보라면, 인사말을 수정하고 상태 코드 200을 응답한다.', async () => {
@@ -136,13 +131,11 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
       const { status, body } = await request(httpExpressAppServer)
         .patch('/greetings')
         .send({ greetingId, situation, contents })
-      const { data } = body
 
       expect(status).toBe(200)
-      expect(jsend.isValid(body)).toBe(true)
-      expect(data.id).toBe(greetingId.toString())
-      expect(data.situation).toBe(situation)
-      expect(data.contents).toBe(contents)
+      expect(body.id).toBe(greetingId.toString())
+      expect(body.situation).toBe(situation)
+      expect(body.contents).toBe(contents)
     })
   })
 })

@@ -74,6 +74,66 @@ export default {
         },
       },
     },
+    definitions: {
+      Greeting: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            format: 'int32',
+          },
+          situation: {
+            type: 'string',
+          },
+          honorific: {
+            type: 'string',
+          },
+          sentenceLength: {
+            type: 'string',
+          },
+          contents: {
+            type: 'string',
+          },
+          bookmarkCount: {
+            type: 'integer',
+            format: 'int32',
+          },
+        },
+      },
+      Greetings: {
+        type: 'object',
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              $ref: '#/definitions/Greeting',
+            },
+          },
+          start: {
+            type: 'integer',
+            format: 'int32',
+          },
+          count: {
+            type: 'integer',
+            format: 'int32',
+          },
+          total: {
+            type: 'integer',
+            format: 'int32',
+          },
+        },
+      },
+      CreatedGreeting: {
+        type: 'object',
+        properties: {
+          createdGreetingId: {
+            type: 'number',
+            format: 'int32',
+          },
+        },
+      },
+    },
     schemes: ['http', 'https'],
   },
   apis: ['src/infrastructure/express/*.{js,ts}', 'src/controller/*Controller.{js,ts}'],
