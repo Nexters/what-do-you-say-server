@@ -29,23 +29,32 @@ describe('API Integration Test (WEB HTTP) :: Greeting', () => {
 
   describe('GET /greetings', () => {
     beforeEach(async () => {
-      const greeting: Greeting = await GreetingFactory.create({})
+      const greeting: Greeting = await GreetingFactory.create({
+        situation: '생일',
+        honorific: '반말',
+        sentenceLength: '1줄',
+      })
       await BookmarkFactory.create({ isOn: true, memberId: 1, greeting })
     })
 
     test('인사말 리스트를 반환하고, 상태 코드 200을 응답한다.', async () => {
       const greetingId: string = '1'
-      const memberId: number = 1
-      const start: number = 0
-      const count: number = 10
+      const memberId: string = encodeURIComponent('1')
+      const situation: string = encodeURIComponent('생일')
+      const honorific: string = encodeURIComponent('반말')
+      const sentenceLength: string = encodeURIComponent('1줄')
+      const start: string = encodeURIComponent('0')
+      const count: string = encodeURIComponent('10')
 
-      const { status, body } = await request(httpExpressAppServer).get(
-        `/greetings?memberId=${memberId}&start=${start}&count=${count}`,
-      )
+      const url: string = `/greetings?memberId=${memberId}&situation=${situation}&honorific=${honorific}&sentenceLength=${sentenceLength}&start=${start}&count=${count}`
+      const { status, body } = await request(httpExpressAppServer).get(url)
       const { items } = body
 
       expect(status).toBe(200)
       expect(items[0].id).toBe(greetingId)
+      expect(items[0].situation).toBe(decodeURIComponent(situation))
+      expect(items[0].honorific).toBe(decodeURIComponent(honorific))
+      expect(items[0].sentenceLength).toBe(decodeURIComponent(sentenceLength))
     })
   })
 

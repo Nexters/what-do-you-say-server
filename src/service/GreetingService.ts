@@ -19,11 +19,12 @@ export default class GreetingService {
 
   public async findGreetings(
     memberId: number,
+    searchGreeting: Greeting,
     start: number,
     count: number,
   ): Promise<[Array<GreetingListView>, number]> {
     const greetingOptions: FindManyOptions<Greeting> = {
-      where: { isDeleted: false },
+      where: { ...searchGreeting, isDeleted: false },
       skip: start,
       take: count,
     }
