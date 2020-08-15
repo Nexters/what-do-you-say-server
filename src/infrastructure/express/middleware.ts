@@ -3,6 +3,7 @@ import { badRequest } from '@infrastructure/express/response'
 import GreetingCreateDto from '@controller/dto/GreetingCreateDto'
 import GreetingUpdateDto from '@controller/dto/GreetingUpdateDto'
 import BookmarkCreateDto from '@controller/dto/BookmarkCreateDto'
+import GreetingSearchDto from '@controller/dto/GreetingSearchDto'
 
 export const validGreetingCreateDto = async (req: Request, res: Response, next: NextFunction) => {
   const { situation, honorific, sentenceLength, contents } = req.body
@@ -61,6 +62,30 @@ export const validBookmarkCreateDto = async (req: Request, res: Response, next: 
     await bookmarkUpdateDto.validate()
 
     req.body = { memberId, greetingId, isOn }
+
+    return next()
+  } catch (error) {
+    const messages = error.map(({ constraints }) => constraints)
+
+    return badRequest(res, { message: messages })
+  }
+}
+
+export const validGreetingSearchDto = async (req: Request, res: Response, next: NextFunction) => {
+  const { memberId, situation, honorific, sentenceLength, start, count } = req.query
+
+  try {
+    const greetingSearchDto: GreetingSearchDto = new GreetingSearchDto()
+      .setMemberId(parseInt(<string>memberId, 10))
+      .setSituation(<string>situation)
+      .setHonorific(<string>honorific)
+      .setSentenceLength(<string>sentenceLength)
+      .setStart(parseInt(<string>start, 10))
+      .setCount(parseInt(<string>count, 10))
+
+    await greetingSearchDto.validate()
+
+    req.body = { memberId, greetingSearchDto, start, count }
 
     return next()
   } catch (error) {
