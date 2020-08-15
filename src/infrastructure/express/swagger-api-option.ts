@@ -132,6 +132,25 @@ export default {
           },
         },
       },
+      Categories: {
+        type: 'object',
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                property: {
+                  type: 'string',
+                },
+                value: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
     },
     schemes: ['http', 'https'],
   },

@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-enum Property {
+export enum Property {
   SITUATION = 'situation',
   HONORIFIC = 'honorific',
   SENTENCE_LENGTH = 'sentence_length',
@@ -8,6 +8,7 @@ enum Property {
 
 @Entity('category')
 @Index(['isDisplay'])
+@Index(['value', 'property', 'isDisplay'])
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'category_id', type: 'int' })
   id!: number
