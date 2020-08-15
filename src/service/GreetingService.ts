@@ -23,8 +23,9 @@ export default class GreetingService {
     start: number,
     count: number,
   ): Promise<[Array<GreetingListView>, number]> {
+    const { situation, honorific, sentenceLength } = searchGreeting
     const greetingOptions: FindManyOptions<Greeting> = {
-      where: { ...searchGreeting, isDeleted: false },
+      where: { situation, honorific, sentenceLength, isDeleted: false },
       skip: start,
       take: count,
     }
