@@ -29,18 +29,16 @@ export default class GreetingService {
       take: count,
     }
 
+    const [greetings, total]: [Array<Greeting>, number] = await this.greetingRepository.findAll(greetingOptions)
+
+    if (!memberId) return [this._buildResultGreetings(greetings, []), total]
+
     const bookmarkOptions: FindManyOptions<Bookmark> = {
       where: { memberId, isOn: true },
       relations: ['greeting'],
     }
 
-    const [[greetings, total], [bookmarks]]: [
-      [Array<Greeting>, number],
-      [Array<Bookmark>, number],
-    ] = await Promise.all([
-      this.greetingRepository.findAll(greetingOptions),
-      this.bookmarkRepository.findAll(bookmarkOptions),
-    ])
+    const [bookmarks]: [Array<Bookmark>, number] = await this.bookmarkRepository.findAll(bookmarkOptions)
 
     return [this._buildResultGreetings(greetings, bookmarks), total]
   }

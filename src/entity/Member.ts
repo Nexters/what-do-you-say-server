@@ -12,6 +12,9 @@ export class Member extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'member_id', type: 'bigint' })
   id!: number
 
+  @Column('varchar', { default: '', comment: '이메일 값' })
+  email!: string
+
   @Column('varchar', { default: '', comment: '고유키 값' })
   key!: string
 

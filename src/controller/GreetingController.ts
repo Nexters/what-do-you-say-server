@@ -39,11 +39,6 @@ export default class GreetingController {
    *    tags: [Greeting]
    *    parameters:
    *      - in: query
-   *        name: memberId
-   *        type: string
-   *        description: 사용자 아이디 전달
-   *        example: 1
-   *      - in: query
    *        name: situation
    *        type: string
    *        description: 상황을 전달
@@ -68,6 +63,11 @@ export default class GreetingController {
    *        type: string
    *        description: 인사말을 가져올 개수를 전달
    *        example: 10
+   *      - in: query
+   *        name: memberId
+   *        type: string
+   *        description: 사용자 아이디 전달
+   *        example: 1
    *    responses:
    *      200:
    *        schema:
@@ -78,7 +78,7 @@ export default class GreetingController {
   @GET()
   @before(validGreetingSearchDto)
   public async findGreetings(req: Request, res: Response, next: NextFunction) {
-    const { memberId, greetingSearchDto, start = 0, count = 10 } = req.body
+    const { memberId = undefined, greetingSearchDto, start = 0, count = 10 } = req.body
 
     try {
       const searchGreeting: Greeting = GreetingSearchDto.toEntity(greetingSearchDto)
@@ -94,7 +94,9 @@ export default class GreetingController {
         GreetingListViewDto.of(greeting),
       )
 
-      return res.status(200).json({ items: greetingsViewDtos, start, count, total })
+      return res
+        .status(200)
+        .json({ items: greetingsViewDtos, start: parseInt(start, 10), count: parseInt(count, 10), total })
     } catch (error) {
       return next(error)
     }
