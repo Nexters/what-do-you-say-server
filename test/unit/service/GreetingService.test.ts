@@ -9,7 +9,11 @@ import { GreetingListView } from '@common/types/greeting-list-view'
 describe('Service :: GreetingService 클래스 테스트', () => {
   describe('findGreetings 메소드는', () => {
     const mockGreetingRepository: CommonGreetingRepository = {
-      findAll: (): Promise<[Array<Greeting>, number]> => Promise.resolve([[{ isDeleted: false } as Greeting], 1]),
+      findAll: (): Promise<[Array<Greeting>, number]> =>
+        Promise.resolve([
+          [{ situation: '생일', honorific: '반말', sentenceLength: '1줄', isDeleted: false } as Greeting],
+          1,
+        ]),
       findOneBy: (): Promise<Greeting> => Promise.resolve({} as Greeting),
       createOne: (): Promise<Greeting> => Promise.resolve({} as Greeting),
       updateOne: (): Promise<UpdateResult> => Promise.resolve({} as UpdateResult),
@@ -31,13 +35,26 @@ describe('Service :: GreetingService 클래스 테스트', () => {
     const greetingService = new GreetingService(mockGreetingRepository, mockBookmarkRepository)
 
     test('인사말 리스트를 반환한다.', async () => {
+      const memberId: number = 1
       const start: number = 0
       const count: number = 10
+      const searchGreeting: Greeting = new Greeting()
+      searchGreeting.situation = '생일'
+      searchGreeting.honorific = '반말'
+      searchGreeting.sentenceLength = '1줄'
 
-      const [greetings, total]: [Array<GreetingListView>, number] = await greetingService.findGreetings(1, start, count)
+      const [greetings, total]: [Array<GreetingListView>, number] = await greetingService.findGreetings(
+        memberId,
+        searchGreeting,
+        start,
+        count,
+      )
 
       expect(total).toBe(1)
       expect(greetings[0].isDeleted).toBe(false)
+      expect(greetings[0].situation).toBe(searchGreeting.situation)
+      expect(greetings[0].honorific).toBe(searchGreeting.honorific)
+      expect(greetings[0].sentenceLength).toBe(searchGreeting.sentenceLength)
     })
   })
 

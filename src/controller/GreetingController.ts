@@ -1,8 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { before, GET, PATCH, POST, route } from 'awilix-express'
 
+import {
+  validGreetingCreateDto,
+  validGreetingUpdateDto,
+  validGreetingSearchDto,
+} from '@infrastructure/express/middleware'
 import { notFound } from '@infrastructure/express/response'
-import { validGreetingCreateDto, validGreetingUpdateDto } from '@infrastructure/express/middleware'
 
 import { Greeting } from '@entity/Greeting'
 import { GreetingListView } from '@common/types/greeting-list-view'
@@ -11,6 +15,7 @@ import GreetingViewDto from '@controller/dto/GreetingViewDto'
 import GreetingCreateDto from '@controller/dto/GreetingCreateDto'
 import GreetingUpdateDto from '@controller/dto/GreetingUpdateDto'
 import GreetingListViewDto from '@controller/dto/GreetingListViewDto'
+import GreetingSearchDto from '@controller/dto/GreetingSearchDto'
 
 /**
  * @swagger
@@ -39,6 +44,21 @@ export default class GreetingController {
    *        description: 사용자 아이디 전달
    *        example: 1
    *      - in: query
+   *        name: situation
+   *        type: string
+   *        description: 상황을 전달
+   *        example: 생일
+   *      - in: query
+   *        name: honorific
+   *        type: string
+   *        description: 존대 정도의 상태를 전달
+   *        example: 반말
+   *      - in: query
+   *        name: sentenceLength
+   *        type: string
+   *        description: 문장 길이를 전달
+   *        example: 1줄
+   *      - in: query
    *        name: start
    *        type: string
    *        description: 리스트가 시작되는 인덱스 위치 전달
@@ -56,14 +76,16 @@ export default class GreetingController {
    *        $ref: '#/components/res/InternalServerError'
    */
   @GET()
+  @before(validGreetingSearchDto)
   public async findGreetings(req: Request, res: Response, next: NextFunction) {
-    const memberId: number = parseInt(<string>req.query.memberId, 10)
-    const start: number = parseInt(<string>req.query.start, 10) || 0
-    const count: number = parseInt(<string>req.query.count, 10) || 10
+    const { memberId, greetingSearchDto, start = 0, count = 10 } = req.body
 
     try {
+      const searchGreeting: Greeting = GreetingSearchDto.toEntity(greetingSearchDto)
+
       const [greetings, total]: [Array<GreetingListView>, number] = await this.greetingService.findGreetings(
         memberId,
+        searchGreeting,
         start,
         count,
       )
