@@ -91,6 +91,34 @@ export default {
           },
         },
       },
+      GreetingView: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            format: 'int32',
+          },
+          situation: {
+            type: 'string',
+          },
+          honorific: {
+            type: 'string',
+          },
+          sentenceLength: {
+            type: 'string',
+          },
+          contents: {
+            type: 'string',
+          },
+          bookmarkCount: {
+            type: 'integer',
+            format: 'int32',
+          },
+          isBookMarking: {
+            type: 'boolean',
+          },
+        },
+      },
       Greetings: {
         type: 'object',
         properties: {
@@ -98,7 +126,7 @@ export default {
             type: 'array',
             items: {
               type: 'object',
-              $ref: '#/definitions/Greeting',
+              $ref: '#/definitions/GreetingView',
             },
           },
           start: {

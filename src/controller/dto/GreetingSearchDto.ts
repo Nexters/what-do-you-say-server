@@ -1,11 +1,7 @@
-import { IsDefined, IsOptional, IsPositive, IsString, validateOrReject } from 'class-validator'
+import { IsDefined, IsOptional, IsPositive, IsString, Min, validateOrReject } from 'class-validator'
 import { Greeting } from '@entity/Greeting'
 
 export default class GreetingSearchDto {
-  @IsDefined({ message: 'memberId는 undefined가 될 수 없습니다.' })
-  @IsPositive({ message: 'memberId는 양수 값이어야 합니다.' })
-  private memberId: number = 0
-
   @IsDefined({ message: 'situation는 undefined가 될 수 없습니다.' })
   @IsString({ message: 'situation는 string값이어야 합니다.' })
   private situation: string = ''
@@ -18,16 +14,16 @@ export default class GreetingSearchDto {
   @IsString({ message: 'sentenceLength는 string값이어야 합니다.' })
   private sentenceLength: string = ''
 
-  @IsOptional()
+  @IsDefined({ message: 'start는 undefined가 될 수 없습니다.' })
+  @Min(0, { message: 'start는 0보다 큰 양수 값이어야 합니다.' })
   private start: number = 0
 
-  @IsOptional()
+  @IsDefined({ message: 'count는 undefined가 될 수 없습니다.' })
+  @IsPositive({ message: 'count는 양수 값이어야 합니다.' })
   private count: number = 10
 
-  public setMemberId(memberId: number): GreetingSearchDto {
-    this.memberId = memberId
-    return this
-  }
+  @IsOptional()
+  private memberId: number = 0
 
   public setSituation(situation: string): GreetingSearchDto {
     this.situation = situation
@@ -54,8 +50,9 @@ export default class GreetingSearchDto {
     return this
   }
 
-  public getMemberId(): number {
-    return this.memberId
+  public setMemberId(memberId: number): GreetingSearchDto {
+    this.memberId = memberId
+    return this
   }
 
   public getSituation(): string {
@@ -76,6 +73,10 @@ export default class GreetingSearchDto {
 
   public getCount(): number {
     return this.count
+  }
+
+  public getMemberId(): number {
+    return this.memberId
   }
 
   public async validate(): Promise<void> {
