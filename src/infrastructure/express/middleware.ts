@@ -4,6 +4,7 @@ import GreetingCreateDto from '@controller/dto/GreetingCreateDto'
 import GreetingUpdateDto from '@controller/dto/GreetingUpdateDto'
 import BookmarkCreateDto from '@controller/dto/BookmarkCreateDto'
 import GreetingSearchDto from '@controller/dto/GreetingSearchDto'
+import MemberCreateDto from '@controller/dto/MemberCreateDto'
 
 export const validGreetingCreateDto = async (req: Request, res: Response, next: NextFunction) => {
   const { situation, honorific, sentenceLength, contents } = req.body
@@ -62,6 +63,24 @@ export const validBookmarkCreateDto = async (req: Request, res: Response, next: 
     await bookmarkUpdateDto.validate()
 
     req.body = { memberId, greetingId, isOn }
+
+    return next()
+  } catch (error) {
+    const messages = error.map(({ constraints }) => constraints)
+
+    return badRequest(res, { message: messages })
+  }
+}
+
+export const vaildMemberCreateDto = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, key, type } = req.body
+
+  try {
+    const memberCreateDto: MemberCreateDto = new MemberCreateDto().setEmail(email).setKey(key).setType(type)
+
+    await memberCreateDto.validate()
+
+    req.body = { memberCreateDto }
 
     return next()
   } catch (error) {
