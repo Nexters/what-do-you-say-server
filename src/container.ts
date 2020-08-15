@@ -5,6 +5,7 @@ import path from 'path'
 
 import GreetingRepository from '@repository/GreetingRepository'
 import BookmarkRepository from '@repository/BookmarkRepository'
+import CategoryRepository from '@repository/CategoryRepository'
 
 export const initContainer = async (dbConnection: Connection | null): Promise<AwilixContainer> => {
   const container: AwilixContainer = createContainer({
@@ -40,6 +41,13 @@ export const initContainer = async (dbConnection: Connection | null): Promise<Aw
     // Custom Repository Injection - Bookmark
     container.register({
       bookmarkRepository: asFunction(() => dbConnection.getCustomRepository(BookmarkRepository), {
+        lifetime: Lifetime.TRANSIENT,
+      }),
+    })
+
+    // Custom Repository Injection - Category
+    container.register({
+      categoryRepository: asFunction(() => dbConnection.getCustomRepository(CategoryRepository), {
         lifetime: Lifetime.TRANSIENT,
       }),
     })
