@@ -128,3 +128,9 @@ src
 ├── repository
 └── service
 ```
+
+<br>
+
+## Architecture
+
+![image](https://user-images.githubusercontent.com/23515771/90474140-97043700-e15f-11ea-829d-ffe4b33916aa.png)
