@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
-import { before, POST, route } from 'awilix-express'
+import { before, GET, POST, route } from 'awilix-express'
 
-import MemberService from '@service/MemeberService'
+import MemberService from '@service/MemberService'
 import MemberCreateDto from '@controller/dto/MemberCreateDto'
 import { vaildMemberCreateDto } from '@infrastructure/express/middleware'
+import { Bookmark } from '@entity/Bookmark'
+import BookmarkListViewDto from '@controller/dto/BookmarkListViewDto'
 
 // import GreetingViewDto from '@controller/dto/GreetingViewDto'
 
@@ -44,6 +46,60 @@ export default class MemberController {
       const memberId: number = await this.memberService.signUpMembers(MemberCreateDto.toEntity(memberCreateDto))
 
       return res.status(201).json({ memberId })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  /**
+   * @swagger
+   * /members/{memberId}/my-page/bookmarks:
+   *  get:
+   *    summary: 북마크 한 리스트 조회
+   *    tags: [Member]
+   *    parameters:
+   *      - in: path
+   *        name: memberId
+   *        type: string
+   *        description: 사용자 아이디 전달
+   *        example: 1
+   *      - in: query
+   *        name: start
+   *        type: string
+   *        description: 리스트가 시작되는 인덱스 위치 전달
+   *        example: 0
+   *      - in: query
+   *        name: count
+   *        type: string
+   *        description: 인사말을 가져올 개수를 전달
+   *        example: 10
+   *    responses:
+   *      200:
+   *        schema:
+   *          $ref: '#/definitions/Bookmarks'
+   *      500:
+   *        $ref: '#/components/res/InternalServerError'
+   */
+  @GET()
+  @route('/:memberId/my-page/bookmarks')
+  public async findBookmarksByMyPage(req: Request, res: Response, next: NextFunction) {
+    const memberId = parseInt(<string>req.params.memberId, 10)
+    const start = parseInt(<string>req.query.start, 10) || 0
+    const count = parseInt(<string>req.query.count, 10) || 10
+
+    try {
+      const [bookmarks, total]: [Array<Bookmark>, number] = await this.memberService.findBookmarksByMyPage(
+        memberId,
+        start,
+        count,
+      )
+
+      // view dto 만들기
+      const bookmarkListViewDto: Array<BookmarkListViewDto> = bookmarks.map((boomark: Bookmark) =>
+        BookmarkListViewDto.of(boomark),
+      )
+
+      return res.status(200).json({ items: bookmarkListViewDto, start, count, total })
     } catch (error) {
       return next(error)
     }

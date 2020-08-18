@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm'
 
-enum LoginType {
+export enum LoginType {
   APPLE = 'apple',
   KAKAO = 'kakao',
   FACEBOOK = 'facebook',

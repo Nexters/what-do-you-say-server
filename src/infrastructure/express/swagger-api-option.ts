@@ -177,6 +177,48 @@ export default {
               },
             },
           },
+          total: {
+            type: 'number',
+          },
+        },
+      },
+      Bookmark: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'number',
+          },
+          isOn: {
+            type: 'boolean',
+          },
+          greeetig: {
+            type: 'object',
+            $ref: '#/definitions/Greeting',
+          },
+        },
+      },
+      Bookmarks: {
+        type: 'object',
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              $ref: '#/definitions/Bookmark',
+            },
+          },
+          start: {
+            type: 'integer',
+            format: 'int32',
+          },
+          count: {
+            type: 'integer',
+            format: 'int32',
+          },
+          total: {
+            type: 'integer',
+            format: 'int32',
+          },
         },
       },
     },
